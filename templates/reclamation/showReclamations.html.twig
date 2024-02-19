@@ -1,0 +1,54 @@
+{% extends 'form.html.twig' %}
+
+{% block title %}Liste des Réclamations{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h1 class="text-center mb-4">Liste des Réclamations</h1>
+
+    {# Afficher les messages flash de type 'warning' #}
+    {% if app.flashes('warning') is not empty %}
+      <div class="alert alert-warning" role="alert">
+        {% for message in app.flashes('warning') %}
+          {{ message }}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if reclamations is empty %}
+      <p class="text-center">Aucune réclamation n'a été trouvée.</p>
+    {% else %}
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Catégorie</th>
+              <th>Sujet</th>
+              <th>Description</th>
+              <th>Date de Soumission</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for reclamation in reclamations %}
+              <tr>
+                <td>{{ reclamation.id }}</td>
+                <td>{{ reclamation.categorie }}</td>
+                <td>{{ reclamation.sujet }}</td>
+                <td>{{ reclamation.description }}</td>
+                <td>{{ reclamation.subdate ? reclamation.subdate|date('Y-m-d H:i:s') : 'Non spécifiée' }}</td>
+                <td>
+                  <a href="{{ path('edit_reclamation', { 'id': reclamation.id }) }}" class="btn btn-primary">Éditer</a>
+                  <a href="{{ path('delete_reclamation', { 'id': reclamation.id }) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?')">Supprimer</a>
+                  <a href="{{ path('show_dbreplies', { 'id': reclamation.id }) }}" class="btn btn-success">Voir les Réponses</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+    <a href="{{ path('add_reclamation') }}" class="btn btn-primary d-block mx-auto">Ajouter une Réclamation</a>
+  </div>
+{% endblock %}

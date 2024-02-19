@@ -1,0 +1,13 @@
+{% extends 'form.html.twig' %}
+
+{% block title %}Réponses pour la Réclamation {{ reclamation.id }}{% endblock %}
+
+{% block body %}
+  <h1>Réponses pour la Réclamation {{ reclamation.id }}</h1>
+  <ul>
+    {% for reply in reclamation.replies %}
+      <li>{{ reply.content }}</li>
+      {# Afficher d'autres détails de la réponse si nécessaire #}
+    {% endfor %}
+  </ul>
+{% endblock %}

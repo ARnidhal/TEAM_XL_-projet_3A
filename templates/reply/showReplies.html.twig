@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Réponses{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center mb-4">Liste des Réponses</h1>
+
+        <table class="table table-bordered mx-auto">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>ID</th>
+                    <th>Date de Réponse</th>
+                    <th>Contenu</th>
+                    <th>Catégorie</th> <!-- Nouvelle colonne pour la catégorie -->
+                    <th>Réclamation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reply in replies %}
+                    <tr>
+                        <td>{{ reply.id }}</td>
+                        <td>{{ reply.repdate|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ reply.content }}</td>
+                        <td>{{ reply.reclamation.categorie }}</td> <!-- Afficher la catégorie de la réclamation -->
+                        <td>{{ reply.reclamation.id }}</td>
+                        <td>
+                            <a href="{{ path('edit_reply', {'id': reply.id}) }}" class="btn btn-sm btn-primary" title="Modifier"><i class="fas fa-edit"></i></a>
+                            <a href="{{ path('delete_reply', {'id': reply.id}) }}" class="btn btn-sm btn-danger" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réponse ?')"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('add_reply') }}" class="btn btn-primary d-block mx-auto mt-4">Ajouter une réponse</a>
+    </div>
+{% endblock %}

@@ -28,7 +28,7 @@ class Reply
 
     public function __construct()
     {
-        $this->repdate = new \DateTime(); // Initialise la date de réponse à la date et l'heure actuelles lors de la création de l'entité
+        $this->repdate = new \DateTime(); 
     }
 
     public function getId(): ?int

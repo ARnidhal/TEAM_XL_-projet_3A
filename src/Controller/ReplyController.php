@@ -91,10 +91,7 @@ class ReplyController extends AbstractController
     #[Route('/showdbReclamations', name: 'show_dbreclamations')]
     public function showReclamations(ReclamationRepository $reclamationRepository): Response
     {
-        // Récupérer toutes les réclamations
         $reclamations = $reclamationRepository->findAll();
-
-        // Afficher la vue avec les réclamations
         return $this->render('reply/showdbReclamations.html.twig', [
             'reclamations' => $reclamations,
         ]);
@@ -103,22 +100,18 @@ class ReplyController extends AbstractController
     #[Route('/deletedbReclamation/{id}', name: 'delete_dbreclamation')]
     public function deletedbReclamation($id, ManagerRegistry $managerRegistry, ReclamationRepository $reclamationRepository): Response
     {
-        // Récupérer l'entityManager
+        
         $entityManager = $managerRegistry->getManager();
 
-        // Récupérer la réclamation avec l'ID donné
+        
         $reclamation = $reclamationRepository->find($id);
 
-        // Vérifier si la réclamation existe
+        
         if (!$reclamation) {
             throw $this->createNotFoundException('Réclamation non trouvée');
         }
-
-        // Supprimer la réclamation
         $entityManager->remove($reclamation);
         $entityManager->flush();
-
-        // Rediriger vers la liste des réclamations
         return $this->redirectToRoute('show_dbreclamations');
     }
 }

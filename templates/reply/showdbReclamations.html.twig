@@ -32,7 +32,7 @@
                     <td>{{ reclamation.subdate ? reclamation.subdate|date('Y-m-d H:i:s') : 'Non spécifiée' }}</td>
                     <td>
                       
-                      <a href="{{ path('delete_reclamation', { 'id': reclamation.id }) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?')">Supprimer</a>
+                      <a href="{{ path('delete_dbreclamation', { 'id': reclamation.id }) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?')">Supprimer</a>
                       <a href="{{ path('add_reply', { 'id': reclamation.id }) }}" class="btn btn-success">Répondre</a> <!-- Utilisation de la route add_reply -->
                     </td>
                   </tr>

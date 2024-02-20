@@ -38,7 +38,7 @@ class Reclamation
     public function __construct()
     {
         $this->replies = new ArrayCollection();
-        $this->subdate = new \DateTime(); // Initialise la date de soumission à la date et l'heure actuelles lors de la création de l'entité
+        $this->subdate = new \DateTime(); 
     }
 
     public function getId(): ?int
@@ -117,7 +117,6 @@ class Reclamation
         return $this;
     }
 
-    // Méthode pour vérifier si la réclamation a des réponses
     public function hasReplies(): bool
     {
         return !$this->replies->isEmpty();

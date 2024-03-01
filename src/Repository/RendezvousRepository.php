@@ -45,4 +45,39 @@ class RendezvousRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findRendezvousSansRapport()
+{
+    return $this->createQueryBuilder('r')
+        ->leftJoin('r.rapport', 'rapport')
+        ->where('rapport.id IS NULL OR r.rapport IS NULL')
+        ->getQuery()
+        ->getResult();
+}
+
+public function searchByCriteria(array $criteria): array
+    {
+        $queryBuilder = $this->createQueryBuilder('r');
+
+        if (isset($criteria['fullname'])) {
+            $queryBuilder
+                ->andWhere('r.fullname LIKE :fullname')
+                ->setParameter('fullname', '%' . $criteria['fullname'] . '%');
+        }
+
+        if (isset($criteria['date'])) {
+            $queryBuilder
+                ->andWhere('r.date = :date')
+                ->setParameter('date', $criteria['date']);
+        }
+        if (isset($criteria['medecin'])) {
+            $queryBuilder
+                ->andWhere('r.medecin = :medecin')
+                ->setParameter('medecin', $criteria['medecin']);
+        }
+
+        // Ajoutez autant de conditions que nécessaire
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

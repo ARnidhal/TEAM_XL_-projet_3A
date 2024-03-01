@@ -73,6 +73,8 @@ class Rendezvous
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $time = null;
 
+     
+
 
    
     public function getId(): ?int
@@ -181,6 +183,25 @@ class Rendezvous
 
         return $this;
     }
+
+    #[ORM\OneToOne(mappedBy: 'rendezvous')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Rapport $rapport = null;
+
+    // ... existing methods ...
+
+    public function getRapport(): ?Rapport
+    {
+        return $this->rapport;
+    }
+
+    public function setRapport(?Rapport $rapport): static
+    {
+        $this->rapport = $rapport;
+
+        return $this;
+    }
+    
 
    
 }

@@ -4,12 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Rapport;
 use App\Form\RapportType;
+use App\Form\Rapport1Type;
 use App\Repository\RapportRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\RendezvousRepository;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
 
 class RapportController extends AbstractController
 {
@@ -34,20 +41,31 @@ class RapportController extends AbstractController
     }
 
     #[Route('/addrapport', name: 'addrapport')]
-    public function addrapport(ManagerRegistry $managerRegistry,Request $request): Response
+    public function addrapport(ManagerRegistry $managerRegistry,Request $request, RendezvousRepository $rendezvousRepository): Response
     {
-        $x=$managerRegistry->getManager();
+        
+       $x=$managerRegistry->getManager();
         
 
+       
         $rapport=new Rapport();
+        //$rendezvousSansRapport = $rendezvousRepository->findRendezvousSansRapport();
+
         $form=$this->createForm(RapportType::class,$rapport);
         $form->handleRequest($request);
-        if($form->isSubmitted() and $form->isValid()){
+        if($form->isSubmitted() and $form->isValid())
+        {
             $rendezvous=$rapport->getRendezvous();
+            $rendezvousSansRapport = $rendezvousRepository->findRendezvousSansRapport();
+             
+            if ($rendezvous->getRapport() === null)
+        {
+            $rendezvous->setRapport($rapport);
             $x->persist($rendezvous);
             $x->persist($rapport);
             $x->flush();
             return $this->redirectToRoute('showrapport');
+        }
 
         }
         return $this->renderForm('admin/addrapport.html.twig', [
@@ -60,11 +78,18 @@ class RapportController extends AbstractController
     {
         $x=$managerRegistry->getManager();
         $rd=$repositery->find($id);
-        $form=$this->createForm(RapportType::class,$rd);
+        $form=$this->createForm(Rapport1Type::class,$rd);
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
+            //$rendezvous=$rd->getRendezvous();
+           // if ($rendezvous->getRapport() === null)
+            //{
+                //$rendezvous->setRapport($rd);
+            
             $x->persist($rd);
+            //$x->persist($rendezvous);
             $x->flush();
+           // }
             return $this->redirectToRoute('showrapport');
         }
 
@@ -82,4 +107,47 @@ class RapportController extends AbstractController
         $x->flush();
         return $this->redirectToRoute('showrapport');
     }
+
+    /////////////////////////////////////PDF////////////////////
+
+
+    #[Route('/pdfrapport/{id}', name: 'pdfrapport')]
+    public function pdfrapport($id ,RapportRepository $rapport): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $rp = $rapport->find($id);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('admin/pdfrapport.html.twig', [
+            'r' => $rp,
+        ]);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Store PDF Binary Data
+        $output = $dompdf->output();
+
+        // Specify the file name
+        $pdfFilename = 'mypdf.pdf';
+
+        // Create a Symfony Response with PDF content
+        $response = new Response($output);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $pdfFilename . '"');
+
+        return $response;
+}
+
 }

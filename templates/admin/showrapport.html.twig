@@ -36,6 +36,7 @@
                     <th>Description</th>
                     <td>delete</td>
                     <td>edit</td>
+                    <td>PDF</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -49,6 +50,7 @@
                     
                     <td><button type="button" class="btn btn-outline-warning" onclick="window.location.href='{{ path('deleterapport',{'id':i.id} )}}'">delete</button></td>
                     <td> <button type="button" class="btn btn-outline-info" onclick="window.location.href='{{ path('editrapport', {'id': i.id}) }}'">Edit</button></td>
+                    <td><button type="button" class="btn btn-dark"onclick="window.location.href='{{ path('pdfrapport', {'id': i.id}) }}'"><i class="bi bi-folder"></i></button></td>
                   </tr>
                   {%endfor%}
                 </tbody>

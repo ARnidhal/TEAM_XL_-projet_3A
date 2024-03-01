@@ -1,0 +1,42 @@
+{% extends 'front/base2.html.twig' %}
+
+
+
+{% block title %}Rendezvous Calendar{% endblock %}
+
+{% block body %}
+    <h1>Rendezvous Calendar</h1>
+
+    <div id="calendar" style="max-width: 600px; margin: 0 auto;"></div>
+
+    {# Include FullCalendar library using CDN links #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch rendezvous data
+            fetch('/get-rendezvous/{{ medecinId }}')
+                .then(response => response.json())
+                .then(data => {
+                    // Initialize FullCalendar
+                    $('#calendar').fullCalendar({
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay'
+                        },
+                        defaultView: 'month',
+                        events: data.map(event => ({
+                            title: event.fullname,
+                            start: event.date + 'T' + event.time,
+                            color: 'red', // Customize the color for booked appointments
+                        })),
+                    });
+                })
+                .catch(error => console.error('Error fetching rendezvous data:', error));
+        });
+    </script>
+{% endblock %}

@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 class RendezvousController extends AbstractController
 {
     #[Route('/rendezvous', name: 'app_rendezvous')]
@@ -42,16 +42,25 @@ class RendezvousController extends AbstractController
     }
 
     #[Route('/show', name: 'show')]
-    public function show(RendezvousRepository $rendezvousRepository): Response
+    public function show(RendezvousRepository $rendezvousRepository,Request $request): Response
     {
         $rd=$rendezvousRepository->findAll();
         $medecinname=[];
         foreach($rd as $rendezvous){
             $medecinname[]=$rendezvous->getMedecin()->getFullname();
         }
+       /* $criteria = [
+            'fullname' => $request->query->get('fullname'),
+            'date' => $request->query->get('date'),
+            'medecin' => $request->query->get('medecin'),
+            // Ajoutez autant de critères que nécessaire
+        ];
+
+        $results = $rendezvousRepository->searchByCriteria($criteria);*/
         return $this->render('admin/show.html.twig', [
             'rendezvous' => $rd,
-            'medecinsname' =>$medecinname
+            'medecinsname' =>$medecinname,
+            //'results' => $results,
         ]);
     }
 
@@ -140,10 +149,11 @@ class RendezvousController extends AbstractController
   {
       
 
+    /*
       
    // Replace these with your Twilio credentials
    $accountSid = 'AC19405307081f214bf11a9ffe75ed0720';
-   $authToken  = 'b163c285bd8e09cb1cd705699cf4dcee';
+   $authToken  = '7686e2fcc6b2df57b44c2cf8db0da723';
 
    // Create a Twilio client
    $twilio = new TwilioClient($accountSid, $authToken);
@@ -169,12 +179,71 @@ class RendezvousController extends AbstractController
       $x->persist($rv);
       $x->flush();
 
+      *////fincommentaire1
       return $this->redirectToRoute('show');
+      /*commentaire2
    } else {
        return new Response('Failed to send SMS.');
        return $this->redirectToRoute('show');
 
    }
+   */
   }
+
+  
+
+
+  /**
+     * @Route("/rendezvous-calendar/{medecinId}", name="rendezvous_calendar")
+     */
+    public function calendar($medecinId): Response
+    {
+        return $this->render('front/calendar.html.twig', [
+            'medecinId' => $medecinId,
+        ]);
+    }
+
+
+    /**
+     * @Route("/get-rendezvous/{medecinId}", name="get_rendezvous")
+     */
+    public function getRendezvous($medecinId,ManagerRegistry $managerRegistry)
+    {
+        
+        $entityManager = $managerRegistry->getManager();
+        $rendezvousRepository = $entityManager->getRepository(Rendezvous::class);
+        $rendezvous = $rendezvousRepository->findBy(['medecin' => $medecinId]);
+
+        $data = [];
+        foreach ($rendezvous as $rendezvous) {
+            $data[] = [
+                'fullname' => $rendezvous->getFullname(),
+                'date' => $rendezvous->getDate()->format('Y-m-d'),
+                'time' => $rendezvous->getTime()->format('H:i:s'),
+            ];
+        }
+
+        return new JsonResponse($data);
+    
+    }
+
+
+
+    #[Route('/searchrendezvous', name: 'searchrendezvous')]
+    public function searchrendezvous(Request $request, RendezvousRepository $repository): Response
+    {
+
+        $criteria = [
+            'fullname' => $request->query->get('fullname'),
+            'date' => $request->query->get('date'),
+            'medecin' => $request->query->get('medecin'),
+            // Ajoutez autant de critères que nécessaire
+        ];
+
+        $results = $repository->searchByCriteria($criteria);
+        return $this->render('admin/show.html.twig', [
+            'results' => $results,
+        ]);
+    }
 }
   

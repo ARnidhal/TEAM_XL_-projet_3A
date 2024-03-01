@@ -28,7 +28,7 @@ class Rapport
     #[ORM\Column(length: 255)]
     private ?string $note = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist','remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Rendezvous $rendezvous = null;
 
@@ -69,6 +69,7 @@ class Rapport
     public function setRendezvous(Rendezvous $rendezvous): static
     {
         $this->rendezvous = $rendezvous;
+        
 
         return $this;
     }

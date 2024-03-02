@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentController extends AbstractController
 {
 
-    #[Route('/comment', name: 'app_comment')]
+    #[Route('/comment', name: 'app_comment', methods: ['GET'])]
     public function index(commentRepository $repo): Response
     {   $tab = $repo->findAll();
         return $this->render('comment/index.html.twig', [
@@ -63,7 +63,7 @@ class CommentController extends AbstractController
             return $this->redirectToRoute('app_post');
         }
         return $this->renderForm('comment/addcomment.html.twig', [
-            'f' => $form
+            'commentForm' => $form
         ]);
     }
 
@@ -80,6 +80,54 @@ class CommentController extends AbstractController
             $em->persist($post);
         }
         $em->flush();
+        return $this->redirectToRoute('app_post');
+    }
+
+
+
+
+    #[Route('/addlikecomment/{id}', name: 'addlikecomment')]
+    public function adlikepost($id, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
+    {
+        // Find the post entity by ID
+        $comment = $commentRepository->find($id);
+
+        if (!$comment) {
+            // Post not found, handle this case accordingly
+            throw $this->createNotFoundException('Post not found');
+        }
+
+        // Set validation status to 1
+        $comment    ->setLikesComment($comment->getLikesComment()+1);
+        $entityManager->persist($comment);
+
+        // Persist changes to the database using the injected EntityManager
+        $this->entityManager->flush();
+
+        // Redirect to the route named 'app_post'
+        return $this->redirectToRoute('app_post');
+    }
+
+
+    #[Route('/adddislikecomment/{id}', name: 'adddislikecomment')]
+    public function adddislikepost($id, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
+    {
+        // Find the post entity by ID
+        $comment = $commentRepository->find($id);
+
+        if (!$comment) {
+            // Post not found, handle this case accordingly
+            throw $this->createNotFoundException('Post not found');
+        }
+
+        // Set validation status to 1
+        $comment    ->setDislikesComment($comment->getDislikesComment()+1);
+        $entityManager->persist($comment);
+
+        // Persist changes to the database using the injected EntityManager
+        $this->entityManager->flush();
+
+        // Redirect to the route named 'app_post'
         return $this->redirectToRoute('app_post');
     }
 

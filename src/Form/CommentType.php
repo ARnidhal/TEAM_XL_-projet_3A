@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 
 class CommentType extends AbstractType
 {
@@ -53,7 +54,8 @@ class CommentType extends AbstractType
                 'choice_label' => 'id',
                 'label' => 'id_post',
             ])
-            ->add('SUBMITCOMMENT', SubmitType::class,[
+            ->add("captcha",ReCaptchaType::class)
+            ->add('SubmitComment', SubmitType::class,[
                 'attr'=>['class'=>'btn btn-main-2 btn-round-full','placeholder'=>'Submit Comment','label'=>'subb',]
             ])
             

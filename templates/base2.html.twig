@@ -9,8 +9,8 @@
         {% block stylesheets %}
 
         <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
-  <link rel="shortcut icon" type="image/x-icon" href="{{asset('/images/favicon.ico')}}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets2/images/favicon.ico')}}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets2/images/favicon.ico')}}" />
 
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap/css/bootstrap.min.css')}}">
@@ -81,7 +81,8 @@
         <nav class="navbar navbar-expand-lg navigation" id="navbar">
             <div class="container">
                   <a class="navbar-brand" href="index.html">
-                      <img src="images/logo.png" alt="" class="img-fluid">
+                      <img src="{{asset('assets2/images/logo4.png')}}" alt="" class="img-fluid" style="width: 250px;height: auto;">
+                      <!-- <img src="images/logo.png" alt="" class="img-fluid"> -->
                   </a>
     
                   <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,10 +117,10 @@
                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="blog-sidebar.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <i class="icofont-thin-down"></i></a>
                         <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                            <li><a class="dropdown-item" href="/post">Blog with Sidebar</a></li>
+                            <li><a class="dropdown-item" href="/post">Blog</a></li>
     
-                            <li><a class="dropdown-item" href="blog-single.html">Blog Single</a></li>
-                            <li><a class="dropdown-item" href="addformpost">add Post</a></li>
+                            <!-- <li><a class="dropdown-item" href="blog-single.html">Blog Single</a></li> -->
+                            <li><a class="dropdown-item" href="/addformpost">Add Post</a></li>
 
                         </ul>
                       </li>
@@ -155,7 +156,7 @@
 			<div class="col-lg-4 mr-auto col-sm-6">
 				<div class="widget mb-5 mb-lg-0">
 					<div class="logo mb-4">
-						<img src="images/logo.png" alt="" class="img-fluid">
+						<img src="{{asset('assets2/images/logo4.png')}}" alt="" class="img-fluid">
 					</div>
 					<p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
 

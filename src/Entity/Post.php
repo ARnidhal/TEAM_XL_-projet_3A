@@ -27,10 +27,12 @@ class Post
     
     #[ORM\Column(length: 1000)]
     #[Assert\NotBlank(message:"The Title must not be blank")]
+    #[Assert\Length(min: 10, minMessage: "Name must be at least {{ limit }} characters long")]
     private ?string $title_post = null;
     
     #[ORM\Column(length: 8000)]
     #[Assert\NotBlank(message:"Post Contenu must not be blank")]
+    #[Assert\Length(min: 30, minMessage: "Name must be at least {{ limit }} characters long")]
     private ?string $contenu_post = null;
 
     #[ORM\Column(nullable: true)]
@@ -48,17 +50,15 @@ class Post
     #[ORM\Column(nullable: true)]
     private ?int $dislikes_post = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_post', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'id_post', targetEntity: Comment::class, cascade: ['remove'])]
     private Collection $id_comment;
 
     public function __construct()
-    {
+    {   
         $this->id_comment = new ArrayCollection();
         $this->nb_comments_post=0;
         $this->likes_post=0;
         $this->dislikes_post=0;
-        
-
     }
 
     public function getId(): ?int

@@ -21,6 +21,7 @@ class Comment
 
     #[ORM\Column(length: 1000)]
     #[Assert\NotBlank(message:"Comment must not be blank")]
+    #[Assert\Length(min: 5, minMessage: "Name must be at least {{ limit }} characters long")]
     private ?string $contenu_comment = null;
 
     #[ORM\Column(nullable: true)]
@@ -31,6 +32,11 @@ class Comment
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Name must not be blank")]
+    #[Assert\Length(min: 3, minMessage: "Name must be at least {{ limit }} characters long")]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]+$/',
+        message: "Name must contain only letters"
+    )]
     private ?string $name_comment = null;
 
     #[ORM\Column(length: 255)]

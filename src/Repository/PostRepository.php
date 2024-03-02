@@ -47,6 +47,16 @@ class PostRepository extends ServiceEntityRepository
 //    }
 
 
+public function findBySearchQuery(string $query): array
+    {
+        // Implement your search logic here
+        // Example: querying posts where the title or content contains the search query
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.title LIKE :query OR p.content LIKE :query')
+            ->setParameter('query', '%'.$query.'%')
+            ->getQuery()
+            ->getResult();
+    }
 
 
 }

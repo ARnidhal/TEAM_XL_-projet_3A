@@ -15,16 +15,198 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PostController extends AbstractController
 {
     #[Route('/post', name: 'app_post')]
-    public function index(PostRepository $repo): Response
+    public function index(PostRepository $repo, PaginatorInterface $paginator,Request $request): Response
     {   $tab = $repo->findBy(['validation_post' => 1]);
+        $tab2 = $repo->findBy(['type_post' => 'Medicine']);
+        $tab3 = $repo->findBy(['type_post' => 'Lab test']);
+        $tab4 = $repo->findBy(['type_post' => 'Equipments']);
+        $tab5 = $repo->findBy(['type_post' => 'Free counselling']);
+        $tab6 = $repo->findBy(['type_post' => 'Heart']);
+        $numhart = count($tab6);
+        $numcouns = count($tab5);
+        $numequip = count($tab4);
+        $nummed = count($tab2);
+        $numlab = count($tab3);
+
+
+        $pagination = $paginator->paginate(
+            $tab, // Query results
+            $request->query->getInt('page', 1), // Current page number, default to 1
+            4 // Items per page
+        );
         return $this->render('post/index.html.twig', [
-            'tab' => $tab,
+            'pagination' => $pagination,
+            'nummed' => $nummed,
+            'numlab' => $numlab,
+            'numequip' => $numequip,
+            'numcouns' => $numcouns,
+            'numhart' => $numhart,
         ]);
     }
+
+    #[Route('/postmed', name: 'app_postmed')]
+    public function indexmed(PostRepository $repo, PaginatorInterface $paginator,Request $request): Response
+    {   $tab = $repo->findBy(['type_post' => 'Medicine']);
+        $tab3 = $repo->findBy(['type_post' => 'Lab test']);
+        $tab4 = $repo->findBy(['type_post' => 'Equipments']);
+        $tab5 = $repo->findBy(['type_post' => 'Free counselling']);
+        $tab6 = $repo->findBy(['type_post' => 'Heart']);
+        $numhart = count($tab6);
+        $numcouns = count($tab5);
+        $numequip = count($tab4);
+        $nummed = count($tab);
+        $numlab = count($tab3);
+        $pagination = $paginator->paginate(
+            $tab, // Query results
+            $request->query->getInt('page', 1), // Current page number, default to 1
+            4 // Items per page
+        );
+        return $this->render('post/index.html.twig', [
+            'pagination' => $pagination,
+            'nummed' => $nummed,
+            'numlab' => $numlab,
+            'numequip' => $numequip,
+            'numcouns' => $numcouns,
+            'numhart' => $numhart,
+
+        ]);
+    }
+
+    #[Route('/postlab', name: 'app_postlab')]
+    public function indexlab(PostRepository $repo, PaginatorInterface $paginator,Request $request): Response
+    {   $tab2 = $repo->findBy(['type_post' => 'Medicine']);
+        $tab = $repo->findBy(['type_post' => 'Lab test']);
+        $tab4 = $repo->findBy(['type_post' => 'Equipments']);
+        $tab5 = $repo->findBy(['type_post' => 'Free counselling']);
+        $tab6 = $repo->findBy(['type_post' => 'Heart']);
+        $numhart = count($tab6);
+        $numcouns = count($tab5);
+        $numequip = count($tab4);
+        $nummed = count($tab2);
+        $numlab = count($tab);
+        $pagination = $paginator->paginate(
+            $tab, // Query results
+            $request->query->getInt('page', 1), // Current page number, default to 1
+            4 // Items per page
+        );
+        return $this->render('post/index.html.twig', [
+            'pagination' => $pagination,
+            'nummed' => $nummed,
+            'numlab' => $numlab,
+            'numequip' => $numequip,
+            'numcouns' => $numcouns,
+            'numhart' => $numhart,
+
+        ]);
+    }
+    #[Route('/postHeart', name: 'app_postHeart')]
+    public function indexHeart(PostRepository $repo, PaginatorInterface $paginator,Request $request): Response
+    {   $tab2 = $repo->findBy(['type_post' => 'Medicine']);
+        $tab3 = $repo->findBy(['type_post' => 'Lab test']);
+        $tab4 = $repo->findBy(['type_post' => 'Equipments']);
+        $tab5 = $repo->findBy(['type_post' => 'Free counselling']);
+        $tab = $repo->findBy(['type_post' => 'Heart']);
+        $numhart = count($tab);
+        $numcouns = count($tab5);
+        $numequip = count($tab4);
+        $nummed = count($tab2);
+        $numlab = count($tab3);
+        $pagination = $paginator->paginate(
+            $tab, // Query results
+            $request->query->getInt('page', 1), // Current page number, default to 1
+            4 // Items per page
+        );
+        return $this->render('post/index.html.twig', [
+            'pagination' => $pagination,
+            'nummed' => $nummed,
+            'numlab' => $numlab,
+            'numequip' => $numequip,
+            'numcouns' => $numcouns,
+            'numhart' => $numhart,
+
+        ]);
+    }
+    #[Route('/postEquipments', name: 'app_postEquipments')]
+    public function indexEquipments(PostRepository $repo, PaginatorInterface $paginator,Request $request): Response
+    {   $tab2 = $repo->findBy(['type_post' => 'Medicine']);
+        $tab3 = $repo->findBy(['type_post' => 'Lab test']);
+        $tab = $repo->findBy(['type_post' => 'Equipments']);
+        $tab5 = $repo->findBy(['type_post' => 'Free counselling']);
+        $tab6 = $repo->findBy(['type_post' => 'Heart']);
+        $numhart = count($tab6);
+        $numcouns = count($tab5);
+        $numequip = count($tab);
+        $nummed = count($tab2);
+        $numlab = count($tab3);
+        $pagination = $paginator->paginate(
+            $tab, // Query results
+            $request->query->getInt('page', 1), // Current page number, default to 1
+            4 // Items per page
+        );
+        return $this->render('post/index.html.twig', [
+            'pagination' => $pagination,
+            'nummed' => $nummed,
+            'numlab' => $numlab,
+            'numequip' => $numequip,
+            'numcouns' => $numcouns,
+            'numhart' => $numhart,
+
+        ]);
+    }
+    #[Route('/postFreecounselling', name: 'app_postFreecounselling')]
+    public function indexFreecounselling(PostRepository $repo, PaginatorInterface $paginator,Request $request): Response
+    {   $tab2 = $repo->findBy(['type_post' => 'Medicine']);
+        $tab3 = $repo->findBy(['type_post' => 'Lab test']);
+        $tab4 = $repo->findBy(['type_post' => 'Equipments']);
+        $tab = $repo->findBy(['type_post' => 'Free counselling']);
+        $tab6 = $repo->findBy(['type_post' => 'Heart']);
+        $numhart = count($tab6);
+        $numcouns = count($tab);
+        $numequip = count($tab4);
+        $nummed = count($tab2);
+        $numlab = count($tab3);
+        $pagination = $paginator->paginate(
+            $tab, // Query results
+            $request->query->getInt('page', 1), // Current page number, default to 1
+            4 // Items per page
+        );
+        return $this->render('post/index.html.twig', [
+            'pagination' => $pagination,
+            'nummed' => $nummed,
+            'numlab' => $numlab,
+            'numequip' => $numequip,
+            'numcouns' => $numcouns,
+            'numhart' => $numhart,
+
+        ]);
+    }
+
+
+
+
+    
+
+
+//     public function showPosts(Request $request, PostRepository $postRepository, PaginatorInterface $paginator)
+// {
+//     $postsQuery = $postRepository->findAllQuery(); // Assuming you have a method to get all posts
+
+//     $pagination = $paginator->paginate(
+//         $postsQuery,
+//         $request->query->getInt('page', 1), // Get the current page number, default to 1 if not provided
+//         10 // Number of items per page
+//     );
+
+//     return $this->render('post/index.html.twig', [
+//         'pagination' => $pagination,
+//     ]);
+// }
 
     private $entityManager; // Define EntityManager
     private $postRepository;
@@ -46,8 +228,23 @@ class PostController extends AbstractController
     #[Route('/admin', name: 'app_Admin')]
     public function  indexx(PostRepository $repoo): Response
     {   $tabb = $repoo->findAll();
+        $tab2 = $repoo->findBy(['type_post' => 'Medicine']);
+        $tab3 = $repoo->findBy(['type_post' => 'Lab test']);
+        $tab4 = $repoo->findBy(['type_post' => 'Equipments']);
+        $tab = $repoo->findBy(['type_post' => 'Free counselling']);
+        $tab6 = $repoo->findBy(['type_post' => 'Heart']);
+        $numhart = count($tab6);
+        $numcouns = count($tab);
+        $numequip = count($tab4);
+        $nummed = count($tab2);
+        $numlab = count($tab3);
         return $this->render('Admin/index.html.twig', [
             'tabb' => $tabb,
+            'nummed' => $nummed,
+            'numlab' => $numlab,
+            'numequip' => $numequip,
+            'numcouns' => $numcouns,
+            'numhart' => $numhart,
         ]);
     }
     
@@ -83,7 +280,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() and $form->isValid()) {
             $x->persist($dataid);
             $x->flush();
-            return $this->redirectToRoute('app_post');
+            return $this->redirectToRoute('postsingle', ['id' => $id]);
         }
         return $this->renderForm('post/addpost.html.twig', [
             'f' => $form
@@ -127,7 +324,7 @@ class PostController extends AbstractController
         $this->entityManager->flush();
 
         // Redirect to the route named 'app_post'
-        return $this->redirectToRoute('app_post');
+        return $this->redirectToRoute('postsingle', ['id' => $id]);
     }
 
     #[Route('/addlikepost/{id}', name: 'addlikepost')]
@@ -149,7 +346,7 @@ class PostController extends AbstractController
         $this->entityManager->flush();
 
         // Redirect to the route named 'app_post'
-        return $this->redirectToRoute('app_post');
+        return $this->redirectToRoute('postsingle', ['id' => $id]);
     }
 
 
@@ -173,7 +370,7 @@ class PostController extends AbstractController
         $this->entityManager->flush();
 
         // Redirect to the route named 'app_post'
-        return $this->redirectToRoute('app_post');
+        return $this->redirectToRoute('postsingle', ['id' => $id]);
     }
 
 
@@ -298,6 +495,10 @@ public function showPostt($id, Request $request, PostRepository $postRepository,
 
 
     
+
+
+
+
 
 
    

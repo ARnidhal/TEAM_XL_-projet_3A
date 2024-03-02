@@ -17,11 +17,7 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_post', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control','placeholder'=>'Id Post'
-                ]
-            ])
+            ->add('id_post',TextType::class,['data'=>mt_rand(10000,999999),])
             ->add('type_post', ChoiceType::class, [
                 'label' => 'Choose Type',
                 'choices' => [

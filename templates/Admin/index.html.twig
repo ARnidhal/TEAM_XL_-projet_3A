@@ -17,6 +17,7 @@
     </nav>
   </div><!-- End Page Title -->
 
+  
   <section class="section">
     <div class="row">
       <div class="col-lg-12">
@@ -26,7 +27,6 @@
             <h5 class="card-title">Datatables</h5>
 
             
-
             <!-- Table with stripped rows -->
             <table class="table datatable">
               <thead>
@@ -76,9 +76,48 @@
             {% endfor %}
           </tbody>
         </table>
+      
         </div>
         </div>
         </section>
+        <section class="section">
+          <div class="card">
+              <div class="card-body pb-0">
+                  <h5 class="card-title">Post Types</h5>
+      
+                  <div id="postTypeChart" style="min-height: 400px;"></div>
+      
+                  <script>
+                      document.addEventListener("DOMContentLoaded", () => {
+                          const postTypes = [
+                              { value: {{ nummed }}, name: 'Medicine' },
+                              { value: {{ numlab }}, name: 'Lab Test' },
+                              { value: {{ numequip }}, name: 'Equipments' },
+                              { value: {{ numcouns }}, name: 'Free Counselling' },
+                              { value: {{ numhart }}, name: 'Heart' }
+                          ];
+      
+                          const chart = echarts.init(document.querySelector("#postTypeChart"));
+                          chart.setOption({
+                              tooltip: { trigger: 'item' },
+                              legend: { orient: 'vertical', left: 'left' },
+                              series: [{
+                                  name: 'Post Types',
+                                  type: 'pie',
+                                  radius: ['40%', '70%'],
+                                  avoidLabelOverlap: false,
+                                  label: { show: false, position: 'center' },
+                                  emphasis: { label: { show: true, fontSize: '18', fontWeight: 'bold' } },
+                                  labelLine: { show: false },
+                                  data: postTypes
+                              }]
+                          });
+                      });
+                  </script>
+              </div>
+          </div>
+      </section>
+      
            
 
 </main>

@@ -8,9 +8,7 @@
     <div class="service">
         <div class="container">
             <div class="section-header text-center">
-              <div id="google_translate_element"></div>
-
-                <h4 style="margin-top:50px; margin-bottom:50px;">Liste des Evenements</h4>
+                <h4 style="margin-top:-200px; margin-bottom:50px;">Liste des Evenements</h4>
             </div>
             <div class="row">
            {% for evenement in evenements %}
@@ -23,9 +21,21 @@
           <p><strong style="color:#696969" >Nbr de participants:</strong> {{ evenement.nbParticipants }}</p>
           <p><strong style="color:#696969">Date de début:</strong> {{ evenement.dateDebut ? evenement.dateDebut|date('Y-m-d') : '' }}</p>
           <p><strong style="color:#696969">Date de fin:</strong> {{ evenement.dateFin ? evenement.dateFin|date('Y-m-d') : '' }}</p>
+          {% if evenement.nomSponsor is defined and evenement.nomSponsor is not empty %}
+          {{ evenement.Sponsor }}
+          {% else %}
+            Pas de sponsor
+          {% endif %}
+          <br>
           {% if evenement.nbParticipants > 0 %}
          <center> <a href="{{ path('app_participant_new',{'idevent':evenement.id}) }}" class="btn btn-primary">Participer</a></center>
           {% endif %}
+          <br>
+          {# -------------------------- Share ------------------------------------  #}
+         <div class="sharethis-inline-share-buttons"></div>
+         {# -------------------------- Share ------------------------------------  #}
+
+          
          <br>
          <br>
 
@@ -44,5 +54,8 @@
     </div>
     <br>
     
+  <div class="pagination-container text-center mt-4">
+    {{ knp_pagination_render(evenements, 'pagination_template.html.twig') }}
+</div>
 
 {% endblock %}

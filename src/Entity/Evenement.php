@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
@@ -20,25 +21,44 @@ class Evenement
     private  $imageEvenement = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 5)]
+    #[Assert\Length(max: 20)]
+    #[Assert\NotBlank(message: "veuillez saisir le Type de l'evenement ")]
     private ?string $typeEvenement = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 5)]
+    #[Assert\Length(max: 20)]
+    #[Assert\NotBlank(message: "veuillez saisir le Nom de l'evenement ")]
     private ?string $nomEvenement = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 5)]
+    #[Assert\Length(max: 20)]
+    #[Assert\NotBlank(message: "veuillez saisir le Lieu de l'evenement ")]
     private ?string $lieuEvenement = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message: "veuillez saisir le Date Debut de l'evenement ")]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message: "veuillez saisir le Date Fin de l'evenement ")]
     private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\Column]
+    #[Assert\Length(max: 3)]
+    #[Assert\NotBlank(message: "veuillez saisir le Nombre de Participant dans l'evenement ")]
     private ?int $nbParticipants = null;
 
     #[ORM\OneToMany(mappedBy: 'Evenement', targetEntity: Participant::class)]
     private Collection $Participant;
+
+    #[ORM\ManyToOne(inversedBy: 'Evenement')]
+    private ?Sponsor $Sponsor = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Color = null;
 
     public function __construct()
     {
@@ -170,5 +190,29 @@ class Evenement
     public function __toString()
     {
         return $this->nomEvenement;
+    }
+
+    public function getSponsor(): ?Sponsor
+    {
+        return $this->Sponsor;
+    }
+
+    public function setSponsor(?Sponsor $Sponsor): static
+    {
+        $this->Sponsor = $Sponsor;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->Color;
+    }
+
+    public function setColor(?string $Color): static
+    {
+        $this->Color = $Color;
+
+        return $this;
     }
 }

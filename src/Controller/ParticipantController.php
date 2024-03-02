@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Entity\Participant;
+use App\Entity\User;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +26,7 @@ class ParticipantController extends AbstractController
     }
 
     #[Route('{idevent}/new', name: 'app_participant_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Evenement $idevent): Response
+    public function new(Request $request, MailerService $mailer, EntityManagerInterface $entityManager, Evenement $idevent): Response
     {
         $participant = new Participant();
         $participant->setEvenement($idevent);
@@ -34,6 +36,12 @@ class ParticipantController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($participant);
+            $id_user = $participant->getUser();
+            $client = $entityManager->getRepository(User::class)->find($id_user);
+            $to = $client->getEmail();
+            $nom = $client->getUsername();
+            $idevent->getNomEvenement();
+            $mailer->sendEmail($to, $nom, $idevent);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_evenement_indexFront', [], Response::HTTP_SEE_OTHER);

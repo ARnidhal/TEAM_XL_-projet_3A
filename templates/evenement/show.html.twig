@@ -42,10 +42,25 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_evenement_index') }}">back to list</a>
+    
+    <div class="row align-items-center">
+    <a href="{{ path('app_evenement_index') }}" class="col-auto bi bi-arrow-left-circle p-0"></a>
+    <div class="col-auto p-0">
+        {{ include('evenement/_delete_form.html.twig') }}
+    </div>
+    <div class="col-auto p-0">
+        <script src="{{asset('assetsB/js/main.js')}}"></script>
+    </div>
+    <div class="col-auto p-0">
+        <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}" class="p-0"><i class="fa-solid fa-pen-to-square"></i></a>
+    </div>
+</div>
 
-    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a>
 
-    {{ include('evenement/_delete_form.html.twig') }}
-    <script src="{{asset('assetsB/js/main.js')}}"></script>
+
+    
+
+    
+
+    
 {% endblock %}

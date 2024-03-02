@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ParticipantRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
 class Participant
@@ -21,6 +22,7 @@ class Participant
     private ?Evenement $Evenement = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "veuillez saisir description du participant ")]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'Participant')]

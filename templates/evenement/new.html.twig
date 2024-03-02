@@ -3,10 +3,9 @@
 {% block title %}New Evenement{% endblock %}
 
 {% block body %}
+
     <h1>Create new Evenement</h1>
-
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
     {{ include('evenement/_form.html.twig') }}
-
-
-<a href="{{ path('app_evenement_index') }}" class="bi bi-arrow-left-circle"></a>
+    <a href="{{ path('app_evenement_index') }}" class="bi bi-arrow-left-circle"></a>
 {% endblock %}

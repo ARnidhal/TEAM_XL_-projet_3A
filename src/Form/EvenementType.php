@@ -6,6 +6,9 @@ use App\Entity\Evenement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Sponsor;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EvenementType extends AbstractType
@@ -19,7 +22,13 @@ class EvenementType extends AbstractType
             ->add('lieuEvenement')
             ->add('dateDebut')
             ->add('dateFin')
-            ->add('nbParticipants');
+            ->add('nbParticipants')
+            ->add('Color', ColorType::class)
+            ->add('Sponsor', EntityType::class, [
+                'class' => Sponsor::class,
+                'choice_label' => 'nomSponsor',
+                'label' => 'Nom Sponsor'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

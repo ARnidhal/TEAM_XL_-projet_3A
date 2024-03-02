@@ -5,7 +5,8 @@
 {% block body %}
     <h1>Create new Participant</h1>
 
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
     {{ include('participant/_form.html.twig') }}
 
-    <a href="{{ path('app_participant_index') }}">back to list</a>
+    <a href="{{ path('app_participant_index') }}"><i class="fa-regular fa-circle-left"></i></a>
 {% endblock %}

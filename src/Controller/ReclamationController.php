@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Controller;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
+use App\Form\SearchReclamationType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\ReclamationRepository;
+
 
 class ReclamationController extends AbstractController
 {
@@ -43,15 +45,39 @@ class ReclamationController extends AbstractController
             'form' => $form,
         ]);
     }
-
     #[Route('/showReclamations', name: 'show_reclamations')]
-    public function showReclamations(ReclamationRepository $reclamationRepository): Response
+    public function showReclamations(Request $request, ReclamationRepository $reclamationRepository): Response
     {
-        $reclamations = $reclamationRepository->findAll();
+        $form = $this->createForm(SearchReclamationType::class);
+        $form->handleRequest($request);
+    
+        $criteria = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer les données du formulaire
+            $data = $form->getData();
+    
+            // Construire les critères de recherche
+            if (!empty($data['title'])) {
+                $criteria['sujet'] = $data['title'];
+            }
+            if (!empty($data['category'])) {
+                $criteria['categorie'] = $data['category'];
+            }
+            if (!empty($data['submissionDate'])) {
+                $criteria['subdate'] = $data['submissionDate'];
+            }
+        }
+    
+        // Récupérer les réclamations filtrées en fonction des critères
+        $reclamations = $reclamationRepository->findBy($criteria);
+    
         return $this->render('reclamation/showReclamations.html.twig', [
+            'form' => $form->createView(),
             'reclamations' => $reclamations,
         ]);
     }
+
+
 
     #[Route('/editReclamation/{id}', name: 'edit_reclamation')]
     public function editReclamation($id, ReclamationRepository $reclamationRepository, ManagerRegistry $managerRegistry, Request $request): Response
@@ -103,4 +129,62 @@ class ReclamationController extends AbstractController
             'replies' => $replies
         ]);
     }
+      
+        #[Route('/show_stats', name: 'test')]
+        public function showStats(ReclamationRepository $reclamationRepository): Response
+{
+    $totalReclamations = $reclamationRepository->countTotalReclamations();
+    $categoriesCount = $reclamationRepository->countReclamationsByCategory();
+
+    $stats = [
+        'total_reclamations' => $totalReclamations,
+        'categories_count' => $categoriesCount,
+    ];
+
+    return $this->render('reclamation/stats.html.twig', [
+        'stats' => $stats,
+    ]);
 }
+#[Route('/search', name: 'search')]
+public function searchAction(Request $request, ReclamationRepository $reclamationRepository): JsonResponse
+{
+    // Récupérer les données de la requête
+    $title = $request->query->get('title');
+    $category = $request->query->get('category');
+    $submissionDate = $request->query->get('submissionDate');
+
+    // Construire les critères de recherche
+    $criteria = [];
+    if (!empty($title)) {
+        $criteria['title'] = $title;
+    }
+    if (!empty($category)) {
+        $criteria['category'] = $category;
+    }
+    if (!empty($submissionDate)) {
+        $criteria['submissionDate'] = $submissionDate;
+    }
+
+    // Effectuer la recherche avancée
+    $reclamations = $reclamationRepository->searchAdvanced($criteria);
+
+    // Convertir les résultats en format JSON
+    $results = [];
+    foreach ($reclamations as $reclamation) {
+        $results[] = [
+            'id' => $reclamation->getId(),
+            'title' => $reclamation->getTitle(),
+            'category' => $reclamation->getCategory(),
+            'submissionDate' => $reclamation->getSubmissionDate()->format('Y-m-d H:i:s'),
+            // Ajoutez d'autres données de réclamation selon vos besoins
+        ];
+    }
+
+    // Retourner les résultats au format JSON
+    return new JsonResponse($results);
+}
+}
+        
+    
+
+

@@ -8,3 +8,7 @@ app_student:
     path: /affiche
     controller: App\Controller\StudentController::affiche
 
+ajax_search:
+    path: /search
+    defaults:  
+        _controller: 'App\Controller\ReclamationController::searchAction'

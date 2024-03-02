@@ -5,6 +5,41 @@
 {% block body %}
   <div class="container">
     <h1 class="text-center mb-4">Liste des Réclamations</h1>
+
+{# Formulaire de recherche avancée #}
+{{ form_start(form) }}
+<div class="row mb-3">
+  <div class="col-md-6">
+    <div class="input-group">
+      <input type="text" id="searchInput" placeholder="Rechercher le sujet" class="form-control cool-input">
+      <span class="input-group-text search-icon"><i class="fa fa-search"></i></span>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="input-group">
+      {{ form_row(form.category, { 'attr': {'class': 'form-select'} }) }}
+    </div>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-md-6">
+    <div class="input-group">
+      {{ form_row(form.submissionDate, { 'attr': {'class': 'form-control', 'placeholder': 'Date de soumission'} }) }}
+    </div>
+  </div>
+  <div class="col-md-6">
+    {# Ajouter d'autres champs de formulaire selon vos besoins #}
+  </div>
+</div>
+<div class="d-grid">
+  <button type="submit" class="btn btn-primary">Rechercher</button>
+</div>
+{{ form_end(form) }}
+      </div>
+    </div>
+
+    
+
     {% if reclamations is empty %}
       <p class="text-center">Aucune réclamation n'a été trouvée.</p>
     {% else %}
@@ -19,7 +54,8 @@
                   <th>Sujet</th>
                   <th>Description</th>
                   <th>Date de Soumission</th>
-                  <th>Actions</th>
+                  <th>Supprimer</th>
+                  <th>Répondre</th>
                 </tr>
               </thead>
               <tbody>
@@ -31,9 +67,10 @@
                     <td>{{ reclamation.description }}</td>
                     <td>{{ reclamation.subdate ? reclamation.subdate|date('Y-m-d H:i:s') : 'Non spécifiée' }}</td>
                     <td>
-                      
-                      <a href="{{ path('delete_dbreclamation', { 'id': reclamation.id }) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?')">Supprimer</a>
-                      <a href="{{ path('add_reply', { 'id': reclamation.id }) }}" class="btn btn-success">Répondre</a> <!-- Utilisation de la route add_reply -->
+                      <a href="{{ path('delete_dbreclamation', { 'id': reclamation.id }) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?')"><i class="fa-regular fa-trash-can fa-bounce fa-xl" style="color: #ffffff;"></i></a>
+                    </td>
+                    <td>
+                      <a href="{{ path('add_reply', { 'id': reclamation.id }) }}" class="btn btn-success btn-sm"><i class="fa-solid fa-reply-all fa-shake fa-xl"></i></a>
                     </td>
                   </tr>
                 {% endfor %}
@@ -44,4 +81,21 @@
       </div>
     {% endif %}
   </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#searchInput').on('input', function() {
+                var query = $(this).val().toLowerCase();
+                $('.table tbody tr').each(function() {
+                    var row = $(this);
+                    var sujet = row.find('td:eq(2)').text().toLowerCase();
+                    if (sujet.includes(query)) {
+                        row.fadeIn(300);
+                    } else {
+                        row.fadeOut(300);
+                    }
+                });
+            }); 
+        });
+    </script>
 {% endblock %}

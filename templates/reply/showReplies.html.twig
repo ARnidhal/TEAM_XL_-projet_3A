@@ -14,7 +14,8 @@
                     <th>Contenu</th>
                     <th>Catégorie</th> 
                     <th>Réclamation</th>
-                    <th>Actions</th>
+                    <th>Editer</th>
+                    <th>Supprimer</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,8 +27,8 @@
                         <td>{{ reply.reclamation.categorie }}</td> <!-- Afficher la catégorie de la réclamation -->
                         <td>{{ reply.reclamation.id }}</td>
                         <td>
-                            <a href="{{ path('edit_reply', {'id': reply.id}) }}" class="btn btn-sm btn-primary" title="Modifier"><i class="fas fa-edit"></i></a>
-                            <a href="{{ path('delete_reply', {'id': reply.id}) }}" class="btn btn-sm btn-danger" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réponse ?')"><i class="fas fa-trash"></i></a>
+                            <a href="{{ path('edit_reply', {'id': reply.id}) }}" class="btn btn-sm btn-primary" title="Modifier"><i class="fas fa-edit fa-shake"></i></a></td>
+                           <td> <a href="{{ path('delete_reply', {'id': reply.id}) }}" class="btn btn-sm btn-danger" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réponse ?')"><i class="fas fa-trash fa-bounce"></i></a>
                         </td>
                     </tr>
                 {% endfor %}

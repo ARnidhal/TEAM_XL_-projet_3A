@@ -7,18 +7,47 @@
     <h1 class="text-center mb-4">Liste des Réclamations</h1>
 
     {# Afficher les messages flash de type 'warning' #}
-    {% if app.flashes('warning') is not empty %}
-      <div class="alert alert-warning" role="alert">
-        {% for message in app.flashes('warning') %}
-          {{ message }}
-        {% endfor %}
-      </div>
-    {% endif %}
+    
+    <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
+        {% if app.session.flashBag.has('warning') %}
+            <div class="alert alert-warning" role="alert">
+                {{ app.session.flashBag.get('warning')[0] }}
+            </div>
+        {% endif %}
+    </div>
 
+    {# Formulaire de recherche avancée #}
+    {{ form_start(form) }}
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="search-container">
+          <input type="text" id="searchInput" placeholder="Rechercher le sujet" class="form-control cool-input">
+          <span class="search-icon"><i class="fa fa-search"></i></span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        {{ form_row(form.category, { 'attr': {'class': 'form-select'} }) }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        {{ form_row(form.submissionDate, { 'attr': {'class': 'form-control', 'placeholder': 'Date de soumission'} }) }}
+      </div>
+      <div class="col-md-6">
+        {# Ajouter d'autres champs de formulaire selon vos besoins #}
+      </div>
+    </div>
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">Rechercher</button>
+    </div>
+   
+    {{ form_end(form) }}
+
+    {# Affichage des réclamations de l'utilisateur #}
     {% if reclamations is empty %}
-      <p class="text-center">Aucune réclamation n'a été trouvée.</p>
+      <p class="text-center mt-4">Aucune réclamation n'a été trouvée.</p>
     {% else %}
-      <div class="table-responsive">
+      <div class="table-responsive mt-4">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -27,7 +56,9 @@
               <th>Sujet</th>
               <th>Description</th>
               <th>Date de Soumission</th>
-              <th>Actions</th>
+              <th>Editer</th>
+              <th>Supprimer</th>
+              <th>Réponse</th>
             </tr>
           </thead>
           <tbody>
@@ -39,9 +70,13 @@
                 <td>{{ reclamation.description }}</td>
                 <td>{{ reclamation.subdate ? reclamation.subdate|date('Y-m-d H:i:s') : 'Non spécifiée' }}</td>
                 <td>
-                  <a href="{{ path('edit_reclamation', { 'id': reclamation.id }) }}" class="btn btn-primary">Éditer</a>
-                  <a href="{{ path('delete_reclamation', { 'id': reclamation.id }) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?')">Supprimer</a>
-                  <a href="{{ path('show_dbreplies', { 'id': reclamation.id }) }}" class="btn btn-success">Voir les Réponses</a>
+                  <a href="{{ path('edit_reclamation', { 'id': reclamation.id }) }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square fa-beat-fade fa-xl"></i></a>
+                </td>
+                <td>
+                  <a href="{{ path('delete_reclamation', { 'id': reclamation.id }) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?')"><i class="fa-regular fa-trash-can fa-bounce fa-xl" style="color: #ffffff;"></i></a>
+                </td>
+                <td>
+                  <a href="{{ path('show_dbreplies', { 'id': reclamation.id }) }}" class="btn btn-success btn-sm"><i class="fa-solid fa-magnifying-glass fa-shake fa-xl" style="color: #fcfcfc;"></i></a>
                 </td>
               </tr>
             {% endfor %}
@@ -49,6 +84,27 @@
         </table>
       </div>
     {% endif %}
-    <a href="{{ path('add_reclamation') }}" class="btn btn-primary d-block mx-auto">Ajouter une Réclamation</a>
+
+    {# Bouton pour afficher les statistiques #}
+    <a href="{{ path('test') }}" class="btn btn-info d-block mx-auto mt-4">Voir les Statistiques</a>
+
+    <a href="{{ path('add_reclamation') }}" class="btn btn-primary d-block mx-auto mt-4">Ajouter une Réclamation</a>
   </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#searchInput').on('input', function() {
+                var query = $(this).val().toLowerCase();
+                $('.table tbody tr').each(function() {
+                    var row = $(this);
+                    var sujet = row.find('td:eq(2)').text().toLowerCase();
+                    if (sujet.includes(query)) {
+                        row.fadeIn(300);
+                    } else {
+                        row.fadeOut(300);
+                    }
+                });
+            }); 
+        });
+    </script>
 {% endblock %}

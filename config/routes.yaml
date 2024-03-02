@@ -10,5 +10,5 @@ change_language:
     controller: App\Controller\ServiceController::switchLanguage
 
 rendezvous_calendar:
-    path: /rendezvous-calendar/{medecinId}
+    path: /rendezvous-calendar/{id}
     controller: App\Controller\RendezvousController::calendar

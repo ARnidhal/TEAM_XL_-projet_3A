@@ -1,16 +1,40 @@
 {% extends 'front/base2.html.twig' %}
 
-
-
 {% block title %}Rendezvous Calendar{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# Add additional stylesheets for FullCalendar #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <style>
+        /* Custom styles for FullCalendar */
+        #calendar {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff; /* Set a background color */
+            border: 1px solid #ddd; /* Add a border */
+            border-radius: 8px; /* Add rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        }
+
+        .fc-prev-button, .fc-next-button, .fc-today-button {
+            background-color: #3498db; /* Customize navigation button color */
+            color: #fff; /* Set text color for navigation buttons */
+        }
+
+        .fc-event {
+            background-color: #e74c3c; /* Customize event background color */
+            color: #fff; /* Set text color for events */
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
     <h1>Rendezvous Calendar</h1>
 
-    <div id="calendar" style="max-width: 600px; margin: 0 auto;"></div>
+    <div id="calendar"></div>
 
     {# Include FullCalendar library using CDN links #}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
@@ -18,10 +42,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch rendezvous data
-            fetch('/get-rendezvous/{{ medecinId }}')
+            fetch('/get-rendezvous/{{ id }}')
                 .then(response => response.json())
                 .then(data => {
-                    // Initialize FullCalendar
+                    // Initialize FullCalendar with your custom options
                     $('#calendar').fullCalendar({
                         header: {
                             left: 'prev,next today',
@@ -29,10 +53,10 @@
                             right: 'month,agendaWeek,agendaDay'
                         },
                         defaultView: 'month',
+                        slotDuration: '01:00:00',
                         events: data.map(event => ({
                             title: event.fullname,
                             start: event.date + 'T' + event.time,
-                            color: 'red', // Customize the color for booked appointments
                         })),
                     });
                 })

@@ -193,26 +193,26 @@ class RendezvousController extends AbstractController
   
 
 
-  /**
-     * @Route("/rendezvous-calendar/{medecinId}", name="rendezvous_calendar")
+    /**
+     * @Route("/rendezvous-calendar/{id}", name="rendezvous_calendar")
      */
-    public function calendar($medecinId): Response
+    public function calendar($id): Response
     {
         return $this->render('front/calendar.html.twig', [
-            'medecinId' => $medecinId,
+            'id' => $id,
         ]);
     }
 
 
     /**
-     * @Route("/get-rendezvous/{medecinId}", name="get_rendezvous")
+     * @Route("/get-rendezvous/{id}", name="get_rendezvous")
      */
-    public function getRendezvous($medecinId,ManagerRegistry $managerRegistry)
+    public function getRendezvous($id,ManagerRegistry $managerRegistry)
     {
         
         $entityManager = $managerRegistry->getManager();
         $rendezvousRepository = $entityManager->getRepository(Rendezvous::class);
-        $rendezvous = $rendezvousRepository->findBy(['medecin' => $medecinId]);
+        $rendezvous = $rendezvousRepository->findBy(['medecin' => $id]);
 
         $data = [];
         foreach ($rendezvous as $rendezvous) {

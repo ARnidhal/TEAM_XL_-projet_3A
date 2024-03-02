@@ -1,8 +1,56 @@
-{% extends 'form.html.twig' %}
+{% extends 'base2.html.twig' %}
 
 {% block title %}Liste des Réclamations{% endblock %}
 
 {% block body %}
+<style>
+  /* Custom style for the search container */
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Style for the search input */
+.cool-input {
+  padding-right: 30px; /* Space for the search icon */
+}
+
+/* Style for the search icon */
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Additional style for the select dropdown */
+.custom-select {
+  height: calc(2.25rem + 2px);
+}
+
+</style>
+
+<section class="page-title bg-1" style="margin-bottom:5%;">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="block text-center">
+            <span class="text-white">your</span>
+            <h1 class="text-capitalize mb-5 text-lg">Reaclamations</h1>
+  
+            <!-- <ul class="list-inline breadcumb-nav">
+              <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+              <li class="list-inline-item"><span class="text-white">/</span></li>
+              <li class="list-inline-item"><a href="#" class="text-white-50">Our blog</a></li>
+            </ul> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div class="container">
     <h1 class="text-center mb-4">Liste des Réclamations</h1>
 
@@ -18,30 +66,31 @@
 
     {# Formulaire de recherche avancée #}
     {{ form_start(form) }}
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <div class="search-container">
-          <input type="text" id="searchInput" placeholder="Rechercher le sujet" class="form-control cool-input">
-          <span class="search-icon"><i class="fa fa-search"></i></span>
-        </div>
-      </div>
-      <div class="col-md-6">
-        {{ form_row(form.category, { 'attr': {'class': 'form-select'} }) }}
-      </div>
+<div class="row mb-3">
+  <div class="col-md-6">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Rechercher le sujet" class="form-control cool-input">
+      <span class="search-icon"><i class="fa fa-search"></i></span>
     </div>
-    <div class="row mb-3">
-      <div class="col-md-6">
-        {{ form_row(form.submissionDate, { 'attr': {'class': 'form-control', 'placeholder': 'Date de soumission'} }) }}
-      </div>
-      <div class="col-md-6">
-        {# Ajouter d'autres champs de formulaire selon vos besoins #}
-      </div>
-    </div>
-    <div class="d-grid">
-      <button type="submit" class="btn btn-primary">Rechercher</button>
-    </div>
-   
-    {{ form_end(form) }}
+  </div>
+  <div class="col-md-6">
+    {{ form_row(form.category, { 'attr': {'class': 'form-select custom-select'} }) }}
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-md-6">
+    {{ form_row(form.submissionDate, { 'attr': {'class': 'form-control cool-input', 'placeholder': 'Date de soumission'} }) }}
+  </div>
+  <div class="col-md-6">
+    {# Ajouter d'autres champs de formulaire selon vos besoins #}
+  </div>
+</div>
+<div class="d-grid">
+  <button type="submit" class="btn btn-primary">Rechercher</button>
+</div>
+
+{{ form_end(form) }}
+
 
     {# Affichage des réclamations de l'utilisateur #}
     {% if reclamations is empty %}

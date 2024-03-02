@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240215014430 extends AbstractMigration
+final class Version20240302134418 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,8 @@ final class Version20240215014430 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE reply (id INT AUTO_INCREMENT NOT NULL, reclamation_id INT DEFAULT NULL, repdate DATETIME NOT NULL, content LONGTEXT NOT NULL, id_admin VARCHAR(255) NOT NULL, INDEX IDX_FDA8C6E02D6BA2D9 (reclamation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE reclamation (id INT AUTO_INCREMENT NOT NULL, sujet VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, subdate DATETIME NOT NULL, categorie VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE reply (id INT AUTO_INCREMENT NOT NULL, reclamation_id INT DEFAULT NULL, repdate DATETIME NOT NULL, content LONGTEXT NOT NULL, INDEX IDX_FDA8C6E02D6BA2D9 (reclamation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE reply ADD CONSTRAINT FK_FDA8C6E02D6BA2D9 FOREIGN KEY (reclamation_id) REFERENCES reclamation (id)');
     }
 
@@ -28,6 +29,7 @@ final class Version20240215014430 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE reply DROP FOREIGN KEY FK_FDA8C6E02D6BA2D9');
+        $this->addSql('DROP TABLE reclamation');
         $this->addSql('DROP TABLE reply');
     }
 }

@@ -19,12 +19,13 @@ class Category
         return $this->nom; // Supposons que "name" est le nom de l'auteur que vous voulez afficher.
     }
     #[Assert\NotBlank(message:"NOM must not be blank")]
-     /**
+    /**
  * @Assert\Regex(
- *     pattern="/^[A-Za-z]+$/",
- *     message="Nom must contain only letters"
+ *     pattern="/^[A-Za-z\s]+$/",
+ *     message="Nom must contain only letters and spaces"
  * )
  */
+
 
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
@@ -44,6 +45,7 @@ class Category
     public function __construct()
     {
         $this->services = new ArrayCollection();
+       
     }
     public function getId(): ?int
     {

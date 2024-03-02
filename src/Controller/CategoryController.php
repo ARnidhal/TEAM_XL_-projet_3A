@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Form\FileUpload;
-
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 
 
@@ -33,7 +33,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/addformcategory', name: 'addformcategory')]
-    public function addformbook( ManagerRegistry $managerRegistry, Request $req): Response
+    public function addformbook( ManagerRegistry $managerRegistry, Request $req  ,FlashBagInterface $flashBag): Response
     {
         $x=$managerRegistry->getManager();
         $cat=new Category();
@@ -42,14 +42,15 @@ class CategoryController extends AbstractController
         if($form->isSubmitted() and $form->isValid())
         {
         
-         
+// Ajouter un message flash de succès
+$flashBag->add('success', 'La réservation a été ajoutée avec succès.');
          $x->persist($cat);
        
         $x->flush();
        
         return $this->redirectToRoute('showdbcategory');
     }
-    return $this->renderForm('formcategorie.html.twig', [
+    return $this->renderForm('category/formcategorie.html.twig', [
         'f'=>$form
     ]);
     }
@@ -69,7 +70,7 @@ class CategoryController extends AbstractController
     {
 
         $cat=$categoryRepository->findAll();
-        return $this->render('tablecategorie.html.twig', [
+        return $this->render('category/tablecategorie.html.twig', [
             'cat'=>$cat
 
         ]);
@@ -82,7 +83,7 @@ class CategoryController extends AbstractController
     {
         $service = $serviceRepository->findAll();
         $cat=$categoryRepository->findAll();
-        return $this->render('showservicebyid.html.twig', [
+        return $this->render('service/showservicebyid.html.twig', [
             'cat'=>$cat,
             'services' => $service,
         ]);
@@ -108,7 +109,7 @@ class CategoryController extends AbstractController
            return $this->redirectToRoute('showdbcategory');
 
         }
-        return $this->renderForm('editcategorie.html.twig', [
+        return $this->renderForm('category/editcategorie.html.twig', [
             'x' => $form 
         ]);
 

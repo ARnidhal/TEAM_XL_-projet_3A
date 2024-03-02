@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ServiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,14 +17,12 @@ class Service
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    
+    public function __toString()
+    {
+        return $this->nom; // Supposons que "name" est le nom de l'auteur que vous voulez afficher.
+    }
     #[Assert\NotBlank(message:"nom must not be blank")]
-    /**
- * @Assert\Regex(
- *     pattern="/^[A-Za-z]+$/",
- *     message="Name must contain only letters"
- * )
- */
+   
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
 
@@ -34,7 +34,7 @@ class Service
     private ?\DateTimeInterface $date_cr = null;
 
    
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255 )]
     private ?string $image = null;
 
     #[ORM\ManyToOne(targetEntity:Category::class,inversedBy: 'services')]
@@ -44,6 +44,17 @@ class Service
 
     #[ORM\Column]
     private ?bool $active = null;
+
+    #[ORM\OneToMany(mappedBy: 'idserivce', targetEntity: Reservationservice::class, cascade:["all"], orphanRemoval:true)]
+private Collection $idres;
+
+
+    public function __construct()
+    {
+        $this->image = 4 ;
+        $this->idres = new ArrayCollection();
+       
+    }
 
     public function getId(): ?int
     {
@@ -90,7 +101,7 @@ class Service
     {
         return $this->image;
     }
-
+   
     public function setImage(string $image): static
     {
         $this->image = $image;
@@ -118,6 +129,36 @@ class Service
     public function setActive(bool $active): static
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservationservice>
+     */
+    public function getIdres(): Collection
+    {
+        return $this->idres;
+    }
+
+    public function addIdre(Reservationservice $idre): static
+    {
+        if (!$this->idres->contains($idre)) {
+            $this->idres->add($idre);
+            $idre->setIdserivce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdre(Reservationservice $idre): static
+    {
+        if ($this->idres->removeElement($idre)) {
+            // set the owning side to null (unless already changed)
+            if ($idre->getIdserivce() === $this) {
+                $idre->setIdserivce(null);
+            }
+        }
 
         return $this;
     }

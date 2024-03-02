@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.10",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.15",
+        "dompdf/dompdf": "^2.0",
         "karser/karser-recaptcha3-bundle": "^0.1.26",
         "easycorp/easyadmin-bundle": "^4.7",
         "stof/doctrine-extensions-bundle": "*",
@@ -37,6 +38,7 @@
         "symfony/mailer": "5.4.*",
         "symfony/mime": "5.4.*",
         "symfony/monolog-bundle": "^3.0",
+        "symfony/twilio-notifier": "5.4.*",
         "symfony/notifier": "5.4.*",
         "symfony/process": "5.4.*",
         "symfony/property-access": "5.4.*",
@@ -54,7 +56,8 @@
         "symfonycasts/reset-password-bundle": "^1.20",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-        "victor-prdh/recaptcha-bundle": "^1.8"
+        "victor-prdh/recaptcha-bundle": "^1.8",
+        "twilio/sdk": "^7.15"
     },
     "config": {
       "allow-plugins": {

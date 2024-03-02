@@ -8,3 +8,7 @@ ajax_search:
 change_language:
     path: /change-language/{language}
     controller: App\Controller\ServiceController::switchLanguage
+
+rendezvous_calendar:
+    path: /rendezvous-calendar/{medecinId}
+    controller: App\Controller\RendezvousController::calendar

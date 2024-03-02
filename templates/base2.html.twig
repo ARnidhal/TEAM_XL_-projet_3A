@@ -9,8 +9,10 @@
         {% block stylesheets %}
 
         <!-- Favicon -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets2/images/favicon.ico')}}" />
-  <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets2/images/favicon.ico')}}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{asset('aseets2/images/favicon.ico')}}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap/css/bootstrap.min.css')}}">
@@ -32,6 +34,7 @@
         {% block javascripts %}
  
         <!-- Main jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{asset('assets2/plugins/jquery/jquery.js')}}"></script>
     <!-- Bootstrap 4.3.2 -->
     <script src="{{asset('assets2/plugins/bootstrap/js/popper.js')}}"></script>
@@ -56,9 +59,9 @@
         {% block header %}
         <!-- ======= Header ======= -->
 
-        <!-- style="background-color: #0c4454;" -->
+
     <header>
-        <div class="header-top-bar " >
+        <div class="header-top-bar">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
@@ -78,68 +81,61 @@
                 </div>
             </div>
         </div>
-        <nav class="navbar navbar-expand-lg navigation" id="navbar">
-            <div class="container">
-                  <a class="navbar-brand" href="index.html">
-                      <img src="{{asset('assets2/images/logo4.png')}}" alt="" class="img-fluid" style="width: 250px;height: auto;">
-                      <!-- <img src="images/logo.png" alt="" class="img-fluid"> -->
-                  </a>
-    
-                  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="icofont-navigation-menu"></span>
-              </button>
-          
-              <div class="collapse navbar-collapse" id="navbarmain">
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home</a>
-                  </li>
-                   <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="service.html">Services</a></li>
-    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="department.html" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Department <i class="icofont-thin-down"></i></a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown02">
-                            <li><a class="dropdown-item" href="department.html">Departments</a></li>
-                            <li><a class="dropdown-item" href="department-single.html">Department Single</a></li>
-                        </ul>
-                      </li>
-    
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="doctor.html" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors <i class="icofont-thin-down"></i></a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown03">
-                            <li><a class="dropdown-item" href="doctor.html">Doctors</a></li>
-                            <li><a class="dropdown-item" href="doctor-single.html">Doctor Single</a></li>
-                            <li><a class="dropdown-item" href="appoinment.html">Appoinment</a></li>
-                        </ul>
-                      </li>
-    
-                   <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="blog-sidebar.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <i class="icofont-thin-down"></i></a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                            <li><a class="dropdown-item" href="/post">Blog</a></li>
-    
-                            <!-- <li><a class="dropdown-item" href="blog-single.html">Blog Single</a></li> -->
-                            <li><a class="dropdown-item" href="/addformpost">Add Post</a></li>
-
-                        </ul>
-                      </li>
-                   <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
-              </div>
-            </div>
-        </nav>
+       
     </header>
-
-    
 
         {% endblock %}
 
-        <!-- {% block sidebar %}
-           
+
+        {% block navbar %}
+
+<nav class="navbar navbar-expand-lg navigation" id="navbar">
+  <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="{{asset('assets2/images/logo4.png')}}" alt="" class="img-fluid" >
+        </a>
+
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="icofont-navigation-menu"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarmain">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="{{ path('calculate_imc')}}">LifeStyle</a></li>
 
 
-        {% endblock %} -->
+         <li class="nav-item"><a class="nav-link" href="{{ path('showdbservice', {'page': 'front'}) }}">Services</a></li>
+
+        
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="doctor.html" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors <i class="icofont-thin-down"></i></a>
+              <ul class="dropdown-menu" aria-labelledby="dropdown03">
+                  <li><a class="dropdown-item" href="doctor.html">Doctors</a></li>
+                  <li><a class="dropdown-item" href="doctor-single.html">Doctor Single</a></li>
+                  <li><a class="dropdown-item" href="appoinment.html">Appoinment</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="blog-sidebar.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <i class="icofont-thin-down"></i></a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                    <li><a class="dropdown-item" href="/post">Blog</a></li>
+
+                    <!-- <li><a class="dropdown-item" href="blog-single.html">Blog Single</a></li> -->
+                    <li><a class="dropdown-item" href="/addformpost">Add Post</a></li>
+
+                </ul>
+              </li>
+         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
         {% block body %}
         
         {% endblock %}
@@ -156,7 +152,7 @@
 			<div class="col-lg-4 mr-auto col-sm-6">
 				<div class="widget mb-5 mb-lg-0">
 					<div class="logo mb-4">
-						<img src="{{asset('assets2/images/logo4.png')}}" alt="" class="img-fluid">
+						<img src="{{asset('assets2/images/logo4.png')}}" alt="" class="img-fluid" >
 					</div>
 					<p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
 
@@ -246,6 +242,19 @@
 					</a>
 				</div>
 			</div>
+
+            <div>
+               <strong>traduction : </strong>
+ <div id="google_translate_element"></div>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en,es,ar', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+ 
+            </div>
 		</div>
 	</div>
 </footer>

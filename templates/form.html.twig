@@ -2,13 +2,17 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>{% block title %}Your Application{% endblock %}</title>
-    <!-- Include CSS styles -->
-    <!--<link rel="stylesheet" href="{{ asset('css/styles.css') }}">-->
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+           <!-- Google Fonts -->
+  
+  
 
-    {% block stylesheets %}
-    <!-- bootstrap.min css -->
+  <!-- bootstrap.min css -->
   <link rel="stylesheet" href="{{asset ('../assets/plugins/bootstrap/css/bootstrap.min.css') }}">
   <!-- Icon Font Css -->
   <link rel="stylesheet" href="{{asset ('../assets/plugins/icofont/icofont.min.css') }}">
@@ -16,82 +20,18 @@
   <link rel="stylesheet" href="{{asset ('../assets/plugins/slick-carousel/slick/slick.css') }}">
   <link rel="stylesheet" href="{{asset ('../assets/plugins/slick-carousel/slick/slick-theme.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-hoeFUtRlZfBI9v98MTtHqnjeP8kG5VX8p+ARqkhe0N66hZB2STnx8IoSItmqSZ8IcxDyMT3XhQtkGdC0/pY0rg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">  
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{{asset ('../assets/css/style2.css') }}">
   <style>
-    /* Styles for the container */
-   
-    a.special-link:link {
-  text-decoration:dashed;
-  display: flex;
-align-items: center;
-justify-content: center;
-font-weight: 600;
-font-size: 20px;
-background-color: #016a97;
-        padding: 12px 20px;
-}
-
-
-
-a.special-link:hover {
-  text-decoration: underline;
-  font-size:200%;
-  color:#d9f4ef;
-}
-
-a.special-link:active {
-  text-decoration: underline;
-}
-
-       .container {
-            display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertica
-            border: 1px solid #ccc; /* Example border */
-        }
-p.farouhtyy {
-    font-size: 22px;
-    display: flex;
-     align-items: center;
-     justify-content: center; 
-      font-weight: 700;
-      color: #0184a1;
-  
-}
-.container2 {
-        display: flex;
-        align-items: center;
-     
-     align-items: center;
-     justify-content: center; 
-    }
-
-    /* Style for the first paragraph */
-    .container2 .farouhtyy {
-        margin-right: 20px; /* Optional margin between elements */
-        font-size: 22px;
-   
-      font-weight: 700;
-      color: #357f8f;
-    }
-p.slouma{
-    font-size: 18px;
-    display: flex;
-     align-items: center;
-     justify-content: center; 
-      font-weight: 700;
-      color: #4d4d4d; 
-}
-        /* Styles for the image */
-    </style>
-    
-    {% endblock %}
+  .header-top-bar {
+	background: #0c4454;
+	font-size: 14px;
+	padding: 10px 0px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	color: #fff;
+  }</style>
+        {% endblock %}
 </head>
 {% block header %}
 
@@ -120,7 +60,7 @@ p.slouma{
 	<nav class="navbar navbar-expand-lg navigation" id="navbar">
 		<div class="container">
 		 	 <a class="navbar-brand" href="index.html">
-			  	<img src="../assets/images/logo.png" alt="" class="img-fluid">
+			  	<img src="../assets/images/logo4.png" alt="" class="img-fluid">
 			  </a>
 
 		  	<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
@@ -146,7 +86,7 @@ p.slouma{
 			  	<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="doctor.html" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors <i class="icofont-thin-down"></i></a>
 					<ul class="dropdown-menu" aria-labelledby="dropdown03">
-						<li><a class="dropdown-item" href="doctor.html">Doctors</a></li>
+						<li><a class="dropdown-item" href="{{path('showdoc')}}">Doctors</a></li>
 						<li><a class="dropdown-item" href="doctor-single.html">Doctor Single</a></li>
 						<li><a class="dropdown-item" href="appoinment.html">Appoinment</a></li>
 					</ul>
@@ -193,6 +133,11 @@ p.slouma{
 			<a class="dropdown-item d-flex align-items-center" href="{{ path ('profile')}}">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
+              </a>
+            </li>
+			<a class="dropdown-item d-flex align-items-center" href="{{ path ('showdoc')}}">
+                <i class="bi bi-person"></i>
+                <span>Display Doctors</span>
               </a>
             </li>
 			{% endif %}
@@ -276,7 +221,7 @@ p.slouma{
 			<div class="col-lg-4 mr-auto col-sm-6">
 				<div class="widget mb-5 mb-lg-0">
 					<div class="logo mb-4">
-						<img src="../assets/images/logo.png" alt="" class="img-fluid">
+						<img src="../assets/images/logo4.png" alt="" class="img-fluid">
 					</div>
 					<p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
 

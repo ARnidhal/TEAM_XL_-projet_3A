@@ -66,36 +66,33 @@
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
                         {% if app.user is not null and app.user.photo is not null %}
-              <img src="{{ asset('uploads/photos/' ~ app.user.photo) }}" alt="Profile">
-                        <div class="pt-2">
-                          <button type="button" class="btn btn-primary btn-sm" title="Upload new profile image">
-                            <i class="bi bi-upload"></i>
-                            {{ form_widget(form.photo, {'attr': {'class': 'form-control', 'style': 'display: none;'}}) }}
-                        </button>
-                        
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                        <img src="{{ asset('uploads/photos/' ~ app.user.photo) }}"  alt="Profile" style="width: 120px; height:120px; border-radius: 50%;">
+                        {% else %}
+                              <p>No profile photo available</p>
+                          {% endif %}
+                      
+                                
+                          
                         </div>
                       </div>
                     </div>
-                    {% else %}
-                    <p>No profile photo available</p>
-                {% endif %}
+                  
                     <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">User Name</label>
+                      <label for="fullName" class="col-md-4 col-lg-5 col-form-label">User Name</label>
                       <div class="col-md-8 col-lg-9">
                         {{ form_widget (form.username, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors (form.username, {'attr': {'class': 'form-danger'}}) }}
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                      <label for="fullName" class="col-md-4 col-lg-5 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
                         {{ form_widget (form.fullname, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors (form.fullname, {'attr': {'class': 'form-danger'}}) }}
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                      <label for="about" class="col-md-4 col-lg-5 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
                         {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors (form.email, {'attr': {'class': 'form-danger'}}) }}
@@ -103,28 +100,28 @@
                     </div>
 
                     <div class="row mb-3">
-                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
+                      <label for="company" class="col-md-4 col-lg-5 col-form-label">Phone Number</label>
                       <div class="col-md-8 col-lg-9">
                         {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors (form.phone, {'attr': {'class': 'form-danger'}}) }}
                       </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Speciality</label>
+                        <label for="company" class="col-md-4 col-lg-5 col-form-label">Speciality</label>
                         <div class="col-md-8 col-lg-9">
                           {{ form_widget(form.specialite, {'attr': {'class': 'form-control'}}) }}
                           {{ form_errors (form.specialite, {'attr': {'class': 'form-danger'}}) }}
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Adress</label>
+                        <label for="company" class="col-md-4 col-lg-5 col-form-label">Adress</label>
                         <div class="col-md-8 col-lg-9">
                           {{ form_widget(form.adress, {'attr': {'class': 'form-control'}}) }}
                           {{ form_errors (form.adress, {'attr': {'class': 'form-danger'}}) }}
                         </div>
                       </div>
                     <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Password</label>
+                      <label for="Job" class="col-md-4 col-lg-5 col-form-label">Password</label>
                       <div class="col-md-8 col-lg-9">
                         {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
                     {{ form_errors (form.password.first, {'attr': {'class': 'form-danger'}}) }}
@@ -133,14 +130,21 @@
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Confirm Password</label>
+                      <label for="Country" class="col-md-4 col-lg-5 col-form-label">Confirm Password</label>
                       <div class="col-md-8 col-lg-9">
                         {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors (form.password.second, {'attr': {'class': 'form-danger'}}) }}
                       </div>
                     </div>
 
-                   
+                    <div class="row mb-3">
+                      <label for="Country" class="col-md-4 col-lg-5 col-form-label">Upload photo</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{ form_widget(form.photo, {'attr': {'class': 'form-control'}}) }}
+                       
+                      </div>
+                    </div>
+
                    
 
                     

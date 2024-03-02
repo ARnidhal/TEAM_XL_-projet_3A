@@ -17,15 +17,18 @@ class Medecin implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[Assert\NotBlank(message:"username must not be blank")]
+    /**
+ * @Assert\Regex(
+ *     pattern="/^[a-zA-Z ]+$/",
+ *     message="Please enter a value containing only letters and spaces."
+ * )
+ */
     #[ORM\Column(length: 30)]
+
     private ?string $username = null;
 
     #[Assert\NotBlank(message:"email must not be blank")]
-    /**
-     * @Assert\Email(
-     *     message = "The email '{{ value }}' is not a valid email."
-     * )
-     */
+    #[Assert\Email(message: "Please enter a valid email address")]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -33,15 +36,7 @@ class Medecin implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @Assert\Regex(
      *     pattern="/^[0-9]+$/",
-     *     message="Phone must contain only numbers"
-     * )
-     */
-    /**
-     * @Assert\Length(
-     *      min = 8,
-     *      minMessage = "Phone must be at least {{ limit }} characters long",
-     * max=8,
-     * maxMessage = "Phone must be at least {{ limit }} characters long"
+     *     message="The value '{{ value }}' can only contain numbers."
      * )
      */
     #[ORM\Column(length: 10)]
@@ -51,6 +46,14 @@ class Medecin implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    /**
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "Password must be at least {{ limit }} characters long",
+     * max=8,
+     * maxMessage = "Password must be at least {{ limit }} characters long"
+     * )
+     */
     private ?string $password = null;
 
 
@@ -65,17 +68,25 @@ class Medecin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $role = [];
 
-    #[Assert\NotBlank(message:"specialite must not be blank")]
+   
     #[ORM\Column(length: 30)]
+   
     private ?string $specialite = null;
 
     
-    #[Assert\NotBlank(message:"adress must not be blank")]
+    
     #[ORM\Column(length: 30)]
+   
     private ?string $adress = null;
 
     
     #[Assert\NotBlank(message:"full name must not be blank")]
+   /**
+ * @Assert\Regex(
+ *     pattern="/^[a-zA-Z ]+$/",
+ *     message="Please enter a value containing only letters and spaces."
+ * )
+ */
     #[ORM\Column(length: 30)]
     private ?string $fullname = null;
 

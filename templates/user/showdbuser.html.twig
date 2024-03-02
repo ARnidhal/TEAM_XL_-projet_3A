@@ -36,8 +36,9 @@
                     <th>Role</th>
                  
                     <th>Photo</th>
-                    <th>Block</th>
+                    <th>Delete</th>
                     <th>Switch</th>
+                    <th>Block</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -59,9 +60,27 @@
 {% else %}
 No Photo
 {% endif %}
-<td> <a class="btn btn-danger" href="" ><i class="fa-solid fa-ban fa-bounce"></i></a></td>
-                    <td><a class="btn btn-success" href=""><i class="fa-solid fa-repeat fa-bounce" style="color: fffafa;"></i></a></td>
-                    </tr>
+    <td>
+      <a href="{{ path('deleteuserad', {'id': a.id}) }}" class="btn btn-secondary"><i class="fa-solid fa-trash-can "></i></a>
+    </td>  
+
+    <td>
+      {% if a.roles[0] == 'admin' %}
+          <a class="btn btn-warning" href="{{ path('switchroleutoser', {'id': a.id}) }}">to User
+              <!--<i class="fa-solid fa-repeat fa-spin fa-flip-both" style="color: fffafa;"></i> -->
+          </a>
+      {% else %}
+          <a class="btn btn-primary" href="{{ path('switchroleadmin', {'id': a.id}) }}">to Admin
+              <!--<i class="fa-solid fa-repeat fa-spin fa-flip-both" style="color: fffafa;"></i> -->
+          </a>
+      {% endif %}
+  </td>
+                    {% if a.token == 1 %}
+                    <td> <a class="btn btn-danger" href="{{ path('block_user', {'id': a.id}) }}" ><i class="fa-solid fa-ban fa-beat"></i></a></td>
+                    {% else %}
+                    <td> <a class="btn btn-success" href="{{ path('unblock_user', {'id': a.id}) }}" ><i class="fa-solid fa-ban fa-beat"></i></a></td>
+                    {% endif %}
+                  </tr>
                   {% endfor %}
                 </tbody>
               </table>
@@ -69,11 +88,11 @@ No Photo
 
             </div>
           </div>
-
+          
         </div>
       </div>
     </section>
-    <a href="{{path('addadmin')}}" class="special-link btn btn-main-2 btn-round-full">Add Admin</a>
+
   </main><!-- End #main -->
  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

@@ -34,12 +34,13 @@
                     <th>Email</th>
                     
                     <th>Photo</th>
-                    <th>Block</th>
-                    <th>Switch</th>
+                    <th>Cancel Appoitment</th>
+      
                   </tr>
                 </thead>
                 <tbody>
                   {%for a in user %}
+                    {% if a.roles[0] =='user' %}
                   <tr>
                     <td>{{a.id}}</td>
                     <td>{{a.username}}</td> 
@@ -52,9 +53,9 @@
 {% else %}
 No Role
 {% endif %}
-<td> <a class="btn btn-danger" href="" >Block</a></td>
-                    <td><a class="btn btn-success" href="">Switch</a></td>
+<td> <a class="btn btn-danger" href="" ><i class="fa-solid fa-ban fa-beat"></i></a></td>
                     </tr>
+                    {% endif %}
                   {% endfor %}
                 </tbody>
               </table>

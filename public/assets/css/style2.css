@@ -432,7 +432,7 @@ a:focus {
 }
 
 .header-top-bar {
-  background: #223a66;
+  background: #0c4454;
   font-size: 14px;
   padding: 10px 0px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -819,7 +819,7 @@ a:focus {
 }
 
 .cta {
-  background: url("../images/bg/bg-4.jpg") no-repeat 50% 50%;
+  background: url("../images/bg/bg-4.jpeg") no-repeat 50% 50%;
   background-size: cover;
   position: relative;
 }

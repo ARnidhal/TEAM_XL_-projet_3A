@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Medecin;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -18,7 +19,25 @@ class DoctorType extends AbstractType
             ->add('username')
             ->add('fullname')
             ->add('email')
-            ->add('specialite')
+            ->add('specialite', ChoiceType::class, [
+                'choices' => [
+                    'Cardiology' => 'Cardiology',
+                    'Dermatology' => 'Dermatology',
+                    'Gastroenterology' => 'Gastroenterology',
+                    'Hematology' => 'Hematology',
+                    'Neurology' => 'Neurology',
+                    'Nephrology' => 'Nephrology',
+                    'Gynecology' => 'Gynecology',
+                    'Oncology' => 'Oncology',
+                    'Ophthalmology' => 'Ophthalmology',
+                    'Orthopedics' => 'Orthopedics',
+                    'Pediatrics' => 'Pediatrics',
+                    'Psychiatry' => 'Psychiatry',
+                    'Radiology' => 'Radiology',
+                ],
+                'placeholder' => 'Choose a specialty', // Optional placeholder text
+                // Other options you might want to include...
+            ])
             ->add('adress')
             ->add('phone')
             ->add('password', RepeatedType::class,[

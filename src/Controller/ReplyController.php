@@ -91,31 +91,34 @@ class ReplyController extends AbstractController
 
     #[Route('/showdbReclamations', name: 'show_dbreclamations')]
     public function showReclamations(Request $request, ReclamationRepository $reclamationRepository): Response
-{
-    $form = $this->createForm(SearchReclamationType::class);
-    $form->handleRequest($request);
-
-    $criteria = [];
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Récupérer les données du formulaire
-        $data = $form->getData();
-
-        // Construire les critères de recherche
-        if (!empty($data['title'])) {
-            $criteria['sujet'] = $data['title'];
+    {
+        $form = $this->createForm(SearchReclamationType::class);
+        $form->handleRequest($request);
+    
+        $criteria = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer les données du formulaire
+            $data = $form->getData();
+    
+            // Construire les critères de recherche
+            if (!empty($data['nom'])) {
+                $criteria['nom'] = $data['nom'];
+            }
+            if (!empty($data['title'])) {
+                $criteria['sujet'] = $data['title'];
+            }
+            if (!empty($data['category'])) {
+                $criteria['categorie'] = $data['category'];
+            }
         }
-        if (!empty($data['category'])) {
-            $criteria['categorie'] = $data['category'];
-        }
-    }
-
-    // Récupérer les réclamations filtrées en fonction des critères
-    $reclamations = $reclamationRepository->findBy($criteria);
-
-    return $this->render('reply/showdbReclamations.html.twig', [
-        'form' => $form->createView(),
-        'reclamations' => $reclamations,
-    ]);
+    
+        // Récupérer les réclamations filtrées en fonction des critères
+        $reclamations = $reclamationRepository->findBy($criteria);
+    
+        return $this->render('reply/showdbReclamations.html.twig', [
+            'form' => $form->createView(),
+            'reclamations' => $reclamations,
+        ]);
     }
 
     

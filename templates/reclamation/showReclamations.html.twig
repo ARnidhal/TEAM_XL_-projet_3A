@@ -1,3 +1,5 @@
+{# Ajouter ce code dans votre template Twig #}
+
 {% extends 'form.html.twig' %}
 
 {% block title %}Liste des Réclamations{% endblock %}
@@ -7,7 +9,6 @@
     <h1 class="text-center mb-4">Liste des Réclamations</h1>
 
     {# Afficher les messages flash de type 'warning' #}
-    
     <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
         {% if app.session.flashBag.has('warning') %}
             <div class="alert alert-warning" role="alert">
@@ -34,7 +35,8 @@
         {{ form_row(form.submissionDate, { 'attr': {'class': 'form-control', 'placeholder': 'Date de soumission'} }) }}
       </div>
       <div class="col-md-6">
-        {# Ajouter d'autres champs de formulaire selon vos besoins #}
+        {# Ajouter le champ Nom et Prénom #}
+        {{ form_row(form.nom, { 'label': 'Nom et Prénom', 'attr': {'placeholder': 'Entrez votre nom et prénom'} }) }}
       </div>
     </div>
     <div class="d-grid">
@@ -55,10 +57,12 @@
               <th>Catégorie</th>
               <th>Sujet</th>
               <th>Description</th>
+              <th>Nom et Prénom</th> {# Ajout de la colonne Nom et Prénom #}
               <th>Date de Soumission</th>
               <th>Editer</th>
               <th>Supprimer</th>
               <th>Réponse</th>
+              <th>Générer PDF</th>
             </tr>
           </thead>
           <tbody>
@@ -68,6 +72,7 @@
                 <td>{{ reclamation.categorie }}</td>
                 <td>{{ reclamation.sujet }}</td>
                 <td>{{ reclamation.description }}</td>
+                <td>{{ reclamation.nom }}</td> {# Affichage du nom de l'utilisateur #}
                 <td>{{ reclamation.subdate ? reclamation.subdate|date('Y-m-d H:i:s') : 'Non spécifiée' }}</td>
                 <td>
                   <a href="{{ path('edit_reclamation', { 'id': reclamation.id }) }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square fa-beat-fade fa-xl"></i></a>
@@ -77,6 +82,9 @@
                 </td>
                 <td>
                   <a href="{{ path('show_dbreplies', { 'id': reclamation.id }) }}" class="btn btn-success btn-sm"><i class="fa-solid fa-magnifying-glass fa-shake fa-xl" style="color: #fcfcfc;"></i></a>
+                </td>
+                <td>
+                  <a href="{{ path('generate_pdf', { 'id': reclamation.id }) }}" class="btn btn-info btn-sm">PDF</a>
                 </td>
               </tr>
             {% endfor %}

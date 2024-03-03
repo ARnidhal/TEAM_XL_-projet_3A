@@ -69,6 +69,14 @@ public function searchAdvanced($criteria)
 
     return $queryBuilder->getQuery()->getResult();
 }
+public function findByNom($nom)
+{
+    return $this->createQueryBuilder('r')
+        ->andWhere('r.nom = :nom')
+        ->setParameter('nom', $nom)
+        ->getQuery()
+        ->getResult();
+}
 
 
 //    /**

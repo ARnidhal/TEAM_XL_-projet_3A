@@ -35,6 +35,9 @@ class Reclamation
     #[ORM\Column(length: 255)]
     private ?string $categorie = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
     public function __construct()
     {
         $this->replies = new ArrayCollection();
@@ -120,5 +123,17 @@ class Reclamation
     public function hasReplies(): bool
     {
         return !$this->replies->isEmpty();
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 }

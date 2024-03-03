@@ -5,7 +5,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType; // Importez DateType
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,11 +14,16 @@ class SearchReclamationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            
-            
-            ->add('category', ChoiceType::class, [
+            ->add('nom', TextType::class, [
+                'label' => 'Nom',
                 'required' => false,
+                'attr' => [
+                    'placeholder' => 'Entrez le nom',
+                ],
+            ])
+            ->add('category', ChoiceType::class, [
                 'label' => 'Catégorie',
+                'required' => false,
                 'choices' => [
                     'Technique' => 'Technique',
                     'Design/UI' => 'Design/UI',
@@ -26,21 +31,24 @@ class SearchReclamationType extends AbstractType
                     'Sécurité' => 'Sécurité',
                     'Communication/Support' => 'Communication/Support',
                 ],
+                'attr' => [
+                    'class' => 'form-select',
+                ],
             ])
-            // Ajoutez le champ de date de soumission
             ->add('submissionDate', DateType::class, [
-                'required' => false,
                 'label' => 'Date de soumission',
+                'required' => false,
                 'widget' => 'single_text',
-                // Ajoutez d'autres options selon vos besoins
+                'attr' => [
+                    'placeholder' => 'Sélectionnez la date',
+                ],
             ]);
-            // Ajoutez d'autres champs selon vos besoins
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configurez les options par défaut du formulaire
+            // Set default options here if needed
         ]);
     }
 }

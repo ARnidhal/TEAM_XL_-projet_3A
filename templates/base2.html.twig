@@ -27,6 +27,8 @@
 
   
 
+  
+
 
         {% endblock %}
 
@@ -53,6 +55,14 @@
     
     <script src="{{asset('assets2/js/script.js')}}"></script>
     <script src="{{asset('assets2/js/contact.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         {% endblock %}
     </head>
     <body>
@@ -208,7 +218,7 @@
 
         {% block footer %}
         
-  <!-- ======= Footer ======= -->
+ <!-- ======= Footer ======= -->
 <!-- footer Start -->
 <footer class="footer section gray-bg">
 	<div class="container">
@@ -216,9 +226,9 @@
 			<div class="col-lg-4 mr-auto col-sm-6">
 				<div class="widget mb-5 mb-lg-0">
 					<div class="logo mb-4">
-						<img src="{{asset('assets2/images/logo4.png')}}" alt="" class="img-fluid" >
+						<img src="assets2/images/logo.png" alt="" class="img-fluid">
 					</div>
-					<p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
+					<p>TOTAL HEALTH CARE SOLUTION</p>
 
 					<ul class="list-inline footer-socials mt-4">
 						<li class="list-inline-item"><a href="https://www.facebook.com/themefisher"><i class="icofont-facebook"></i></a></li>
@@ -228,20 +238,19 @@
 				</div>
 			</div>
 
-			<div class="col-lg-2 col-md-6 col-sm-6">
+            <div class="col-lg-2 col-md-6 col-sm-6">
 				<div class="widget mb-5 mb-lg-0">
-					<h4 class="text-capitalize mb-3">Department</h4>
+					<h4 class="text-capitalize mb-3">LEARN</h4>
 					<div class="divider mb-4"></div>
 
 					<ul class="list-unstyled footer-menu lh-35">
-						<li><a href="#">Surgery </a></li>
-						<li><a href="#">Wome's Health</a></li>
-						<li><a href="#">Radiology</a></li>
-						<li><a href="#">Cardioc</a></li>
-						<li><a href="#">Medicine</a></li>
+						<li><a href="#">HEALTHY-LIFESTYLE</a></li>
+						<li><a href="#">GYM</a></li>
+						
 					</ul>
 				</div>
 			</div>
+			
 
 			<div class="col-lg-2 col-md-6 col-sm-6">
 				<div class="widget mb-5 mb-lg-0">
@@ -249,11 +258,11 @@
 					<div class="divider mb-4"></div>
 
 					<ul class="list-unstyled footer-menu lh-35">
-						<li><a href="#">Terms & Conditions</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Company Support </a></li>
-						<li><a href="#">FAQuestions</a></li>
-						<li><a href="#">Company Licence</a></li>
+						<li><a href="#">APPOINTEMENTS</a></li>
+						<li><a href="#">SERVICES</a></li>
+						<li><a href="#">BLOGS </a></li>
+						<li><a href="#">RECLAMATION</a></li>
+						<li><a href="#">EVENTS</a></li>
 					</ul>
 				</div>
 			</div>
@@ -268,7 +277,7 @@
 							<i class="icofont-email mr-3"></i>
 							<span class="h6 mb-0">Support Available for 24/7</span>
 						</div>
-						<h4 class="mt-2"><a href="tel:+23-345-67890">Support@email.com</a></h4>
+						<h4 class="mt-2"><a href="tel:+23-345-67890">visita@email.com</a></h4>
 					</div>
 
 					<div class="footer-contact-block">
@@ -276,28 +285,13 @@
 							<i class="icofont-support mr-3"></i>
 							<span class="h6 mb-0">Mon to Fri : 08:30 - 18:00</span>
 						</div>
-						<h4 class="mt-2"><a href="tel:+23-345-67890">+23-456-6588</a></h4>
+						<h4 class="mt-2"><a href="tel:+23-345-67890">+216 25 255 255</a></h4>
 					</div>
 				</div>
 			</div>
 		</div>
 		
-		<div class="footer-btm py-4 mt-5">
-			<div class="row align-items-center justify-content-between">
-				<div class="col-lg-6">
-					<div class="copyright">
-						&copy; Copyright Reserved to <span class="text-color">Novena</span> by <a href="https://themefisher.com/" target="_blank">Themefisher</a>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="subscribe-form text-lg-right mt-5 mt-lg-0">
-						<form action="#" class="subscribe">
-							<input type="text" class="form-control" placeholder="Your Email address">
-							<a href="#" class="btn btn-main-2 btn-round-full">Subscribe</a>
-						</form>
-					</div>
-				</div>
-			</div>
+		
 
 			<div class="row">
 				<div class="col-lg-4">
@@ -306,23 +300,9 @@
 					</a>
 				</div>
 			</div>
-
-            <div>
-               <strong>traduction : </strong>
- <div id="google_translate_element"></div>
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en,es,ar', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-    }
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
- 
-            </div>
 		</div>
 	</div>
 </footer>
-
         {% endblock %}
     </body>
 </html>

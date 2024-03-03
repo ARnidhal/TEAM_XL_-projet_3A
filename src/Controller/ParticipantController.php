@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Entity\Participant;
-use App\Entity\User;
+use App\Entity\Medecin;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
 use App\Service\MailerService;
@@ -36,8 +36,8 @@ class ParticipantController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($participant);
-            $id_user = $participant->getUser();
-            $client = $entityManager->getRepository(User::class)->find($id_user);
+            $ID = $participant->getUser();
+            $client = $entityManager->getRepository(Medecin::class)->find($ID);
             $to = $client->getEmail();
             $nom = $client->getUsername();
             $idevent->getNomEvenement();
@@ -46,7 +46,7 @@ class ParticipantController extends AbstractController
 
             return $this->redirectToRoute('app_evenement_indexFront', [], Response::HTTP_SEE_OTHER);
         }
-
+        
         return $this->renderForm('participant/new.html.twig', [
             'participant' => $participant,
             'form' => $form,

@@ -6,6 +6,7 @@ use App\Repository\ParticipantRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Medecin;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
 class Participant
@@ -80,12 +81,12 @@ class Participant
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser(): ?Medecin
     {
         return $this->User;
     }
 
-    public function setUser(?User $User): static
+    public function setUser(?Medecin $User): static
     {
         $this->User = $User;
 

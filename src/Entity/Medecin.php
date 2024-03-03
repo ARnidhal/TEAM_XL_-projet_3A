@@ -316,6 +316,7 @@ class Medecin implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    
     public function __toString()
 {
     return $this->fullname; // Supposons que "name" est le nom de l'auteur que vous voulez afficher.

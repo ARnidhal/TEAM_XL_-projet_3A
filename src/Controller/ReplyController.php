@@ -36,7 +36,7 @@ class ReplyController extends AbstractController
             return $this->redirectToRoute('show_replies');
         }
         return $this->renderForm('reply/addReply.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

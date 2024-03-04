@@ -320,6 +320,20 @@
             </a>
           </li>
           
+          <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ path('addRV')}}">
+              <i class="bi bi-circle"></i><span>Form Appointements</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ path('addrapport')}}">
+              <i class="bi bi-circle"></i><span>Form Rapport</span>
+            </a>
+          </li>
+          
+          
+        </ul>
         
         </ul>
       </li><!-- End Forms Nav -->
@@ -361,6 +375,19 @@
             <a href="/evenement"><i class="bi bi-circle"></i><span>Tables Events</span></a>
           </li>
         </ul>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          
+          <li>
+            <a href="{{ path('show') }}">
+              <i class="bi bi-circle"></i><span>Appointements Tables</span>
+            </a>
+          </li>
+           <li>
+            <a href="{{ path('showrapport') }}">
+              <i class="bi bi-circle"></i><span>Rapport Tables</span>
+            </a>
+          </li>
+        </ul>
         
       </li><!-- End Tables Nav -->
 
@@ -372,6 +399,14 @@
           <li>
             <a href="{{ path('chartservice')}}">
               <i class="bi bi-circle"></i><span>service reservation Charts</span>
+            </a>
+          </li>
+         
+        </ul>
+        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ path('docchart')}}">
+              <i class="bi bi-circle"></i><span>users charts </span>
             </a>
           </li>
          

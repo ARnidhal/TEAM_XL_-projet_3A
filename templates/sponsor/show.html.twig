@@ -3,6 +3,7 @@
 {% block title %}Sponsor{% endblock %}
 
 {% block body %}
+<div style="margin: 400px;">
     <h1>Sponsor</h1>
 
     <table class="table">
@@ -31,4 +32,5 @@
     <a href="{{ path('app_sponsor_edit', {'id': sponsor.id}) }}">edit</a>
 
     {{ include('sponsor/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

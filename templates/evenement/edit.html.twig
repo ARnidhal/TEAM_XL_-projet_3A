@@ -3,6 +3,7 @@
 {% block title %}Edit Evenement{% endblock %}
 
 {% block body %}
+ <div style="margin: 400px;">
     <h1>Edit Evenement</h1>
     {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
 
@@ -12,6 +13,6 @@
     
 
     <a href="{{ path('app_evenement_index') }}" class="bi bi-arrow-left-circle"></a>
-
+</div>
     
 {% endblock %}

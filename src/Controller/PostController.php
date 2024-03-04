@@ -38,7 +38,7 @@ class PostController extends AbstractController
         $pagination = $paginator->paginate(
             $tab, // Query results
             $request->query->getInt('page', 1), // Current page number, default to 1
-            4 // Items per page
+            2 // Items per page
         );
         return $this->render('post/index.html.twig', [
             'pagination' => $pagination,

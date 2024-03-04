@@ -202,7 +202,7 @@
        
         <div class="row">
           
-            {% for a in service %}
+            {% for a in pagination %}
             <style>
               .card {
                   transition: transform 0.5s, box-shadow 0.5s, background-color 0.5s;
@@ -266,6 +266,49 @@
         </div>  
     </div>
   </div>
+  <div class="row mt-5">
+    <div class="col-lg-8">
+        <nav class="pagination py-2 d-inline-block">
+    <div class="col-lg-8" >
+      <nav class="pagination py-2 d-inline-block">
+        <div class="nav-links"style="display: flex;">
+          {% if pagination.currentPageNumber > 1 %}
+            <a class="page-numbers" href="{{ path('app_post', {'page': 1}) }}">First</a>
+            <a class="page-numbers" href="{{ path('app_post', {'page': pagination.currentPageNumber - 1}) }}">Prev</a>
+          {% else %}
+            <span class="page-numbers disabled">First</span>
+            <span class="page-numbers disabled">Prev </span>
+          {% endif %}
+    
+          {% for page in range(1, pagination.pageCount) %}
+            {% if pagination.currentPageNumber == page %}
+              <span aria-current="page" class="page-numbers current">{{ page }}</span>
+            {% else %}
+            {% endif %}
+          {% endfor %}
+    
+          {% if pagination.currentPageNumber < pagination.pageCount %}
+            <a class="page-numbers" href="{{ path('app_post', {'page': pagination.currentPageNumber + 1}) }}">Next</a>
+            <a class="page-numbers" href="{{ path('app_post', {'page': pagination.pageCount}) }}">Last</a>
+          {% else %}
+            <span class="page-numbers disabled">Next</span>
+            <span class="page-numbers disabled">Last</span>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+    
+    
+    
+    
+    
+
+
+
+            
+        </nav>
+    </div>
+</div>
 </section>
 
 

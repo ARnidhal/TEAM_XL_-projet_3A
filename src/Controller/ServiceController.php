@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Form\FileUpload;
 
@@ -106,13 +107,18 @@ class ServiceController extends AbstractController
     
     
 
-    #[Route('/tableservice/{page}', name: 'showdbservice' , requirements: ['page' => '^(front|back|front1)$'])] //affichage
-    public function showdbservice(ServiceRepository $serviceRepository,CategoryRepository $categoryRepository , string $page): Response
+    #[Route('/tableservice/{page}', name: 'showdbservice' , requirements: ['page2' => '^(front|back|front1)$'])] //affichage
+    public function showdbservice(ServiceRepository $serviceRepository,CategoryRepository $categoryRepository , string $page, PaginatorInterface $paginator,Request $request): Response
     {
 
         $service=$serviceRepository->findAll();
         $cat=$categoryRepository->findAll();
          $service1 = $serviceRepository->findBy(['active' => true]);
+         $pagination = $paginator->paginate(
+            $service1, // Query results
+            $request->query->getInt('page', 1), // Current page number, default to 1
+            3 // Items per page
+        );
       //$service=$ServiceRepository->orderbyusername();//tri ASC
       // $aservice=$serviceRepository-> seachwithalph();//recherche
 
@@ -126,7 +132,7 @@ class ServiceController extends AbstractController
         // Rendre la seconde page
         return $this->render('service/frontaffichageservice.html.twig' , [
             'cat' => $cat,
-            'service'=>$service1
+            'pagination'=>$pagination
         ]);
     }
 

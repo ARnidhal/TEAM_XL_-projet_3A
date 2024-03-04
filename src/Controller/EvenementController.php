@@ -47,7 +47,7 @@ class EvenementController extends AbstractController
         }
 
 
-        return $this->render('evenement/stat.html.twig', [
+        return $this->render('evenement/stat.html.twig', [    //color
             'nomEvenement' => json_encode($nomEvenement),
             'color' => json_encode($color),
             'evcount' => json_encode($evcount),

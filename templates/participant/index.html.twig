@@ -12,7 +12,7 @@
                 <th>DateParticipation</th>
                 <th>Evenement</th>
                 <th>Description</th>
-                <th>User</th>
+                <th>Medecin</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,7 +23,7 @@
                 <td>{{ participant.dateParticipation ? participant.dateParticipation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ participant.Evenement }}</td>
                 <td>{{ participant.description }}</td>
-                <td>{{ participant.User }}</td>
+                <td>{{ participant.Medecin }}</td>
                 <td>
                     <a href="{{ path('app_participant_show', {'id': participant.id}) }}">show</a>
                     <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">edit</a>

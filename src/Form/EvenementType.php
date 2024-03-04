@@ -27,7 +27,9 @@ class EvenementType extends AbstractType
             ->add('Sponsor', EntityType::class, [
                 'class' => Sponsor::class,
                 'choice_label' => 'nomSponsor',
-                'label' => 'Nom Sponsor'
+                'label' => 'Nom Sponsor',
+                'placeholder' => 'Choisir un sponsor', // Set the placeholder text
+                'required' => false // Set required to false
             ]);
     }
 

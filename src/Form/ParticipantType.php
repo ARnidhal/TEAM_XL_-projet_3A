@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Evenement;
+use App\Entity\Medecin;
 use App\Entity\Participant;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,8 +26,8 @@ class ParticipantType extends AbstractType
                 'choice_label' => 'nomEvenement',
                 'label' => 'Nom Evenement'
             ])
-            ->add('User', EntityType::class, [
-                'class' => User::class,
+            ->add('Medecin', EntityType::class, [
+                'class' => Medecin::class,
                 'choice_label' => 'email',
                 'label' => 'Email'
             ]);;

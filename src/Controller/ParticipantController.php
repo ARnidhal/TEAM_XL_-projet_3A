@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
-use App\Entity\Participant;
 use App\Entity\Medecin;
+use App\Entity\Participant;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
 use App\Service\MailerService;
@@ -36,8 +36,8 @@ class ParticipantController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($participant);
-            $ID = $participant->getUser();
-            $client = $entityManager->getRepository(Medecin::class)->find($ID);
+            $id_medecin = $participant->getMedecin();
+            $client = $entityManager->getRepository(Medecin::class)->find($id_medecin);
             $to = $client->getEmail();
             $nom = $client->getUsername();
             $idevent->getNomEvenement();

@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Evenement;
-use App\Entity\Participant;
 use App\Entity\Medecin;
+use App\Entity\Participant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -25,7 +25,7 @@ class ParticipantType extends AbstractType
                 'choice_label' => 'nomEvenement',
                 'label' => 'Nom Evenement'
             ])
-            ->add('User', EntityType::class, [
+            ->add('Medecin', EntityType::class, [
                 'class' => Medecin::class,
                 'choice_label' => 'email',
                 'label' => 'Email'

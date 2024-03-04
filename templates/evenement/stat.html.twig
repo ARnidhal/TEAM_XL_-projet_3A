@@ -34,10 +34,34 @@
             </script>
             {% endblock %}#}
 
+{% extends 'back.html.twig' %}
+    {% block body %}
+<main id="main" class="main">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="pagetitle">
+      <h1>Data Tables</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item active">Data</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
 
-            <div>
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+            
+              <h5 class="card-title">Datatables</h5>
+            
+
+<div class="chart-container">        
   <canvas id="myChart"></canvas>
-</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -45,7 +69,7 @@
   const ctx = document.getElementById('myChart');
 
   new Chart(ctx, {
-    type: 'bar',
+    type: 'pie',
     data: {
       labels: {{ nomEvenement | raw}},
       datasets: [{
@@ -64,7 +88,17 @@
     }
   });
 </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
+</div>
+</div>
+</section>
+{% endblock %}
 
 
 

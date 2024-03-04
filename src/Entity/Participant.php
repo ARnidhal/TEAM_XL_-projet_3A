@@ -26,9 +26,11 @@ class Participant
     #[Assert\NotBlank(message: "veuillez saisir description du participant ")]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Participant')]
-    private ?User $User = null;
 
+    /////////// tzid
+    #[ORM\ManyToOne(inversedBy: 'Participant')]
+    private ?Medecin $Medecin = null;
+    /////////////////////
 
     public function __construct()
     {
@@ -81,15 +83,18 @@ class Participant
         return $this;
     }
 
-    public function getUser(): ?Medecin
+
+    ///////////////////// tzid
+    public function getMedecin(): ?Medecin
     {
-        return $this->User;
+        return $this->Medecin;
     }
 
-    public function setUser(?Medecin $User): static
+    public function setMedecin(?Medecin $Medecin): static
     {
-        $this->User = $User;
+        $this->Medecin = $Medecin;
 
         return $this;
     }
+    ///////////////////////////////////
 }

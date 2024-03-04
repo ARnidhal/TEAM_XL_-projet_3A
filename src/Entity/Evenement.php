@@ -33,7 +33,7 @@ class Evenement
     private ?string $nomEvenement = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min: 5)]
+    #[Assert\Length(min: 3)]
     #[Assert\Length(max: 20)]
     #[Assert\NotBlank(message: "veuillez saisir le Lieu de l'evenement ")]
     private ?string $lieuEvenement = null;

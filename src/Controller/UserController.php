@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use Dompdf\Options;
 use App\Entity\Medecin;
 use OpenAI;
 use App\Form\DoctorType;
@@ -9,6 +9,7 @@ use App\Form\UserType;
 use App\Repository\MedecinRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
@@ -177,17 +178,62 @@ class UserController extends AbstractController
     
     
     
-        #[Route('/showdbuser', name: 'showdbuser')] //affichage
+        #[Route('/showdbuser', name: 'showdbuser')]
         public function showdbuser(MedecinRepository $userRepository): Response
         {
-    
-            $user=$userRepository->findAll();
+           
+            // Fetch user data from the repository
+            $users = $userRepository->findAll();
+           
+            // Pass PDF content and user data to the view
             return $this->render('user/showdbuser.html.twig', [
-                'user'=>$user,
-    
+                'user' => $users,
             ]);
         }
-    
+
+
+
+        #[Route('/pdfadmin', name: 'pdfadmin')]
+        public function generatePdf(MedecinRepository $userRepository): Response
+{
+    $dompdf = new Dompdf();
+
+    // Fetch user data from the repository
+    $users = $userRepository->findAll();
+    // Render HTML content for pdfadmin.html.twig
+    $html = $this->renderView('user/pdfadmin.html.twig', [
+        'user' => $users,
+    ]);
+
+    // Load HTML to Dompdf
+    $dompdf->loadHtml($html);
+
+    // Set paper size and orientation
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Create options instance
+    $options = new Options();
+
+    // Set options
+    $options->set('dpi', 150); // Adjust DPI for better image and text quality
+    $options->set('isHtml5ParserEnabled', true); // Enable HTML5 parser
+    // Add more options as needed
+
+    // Apply options to Dompdf
+    $dompdf->setOptions($options);
+
+    // Render PDF
+    $dompdf->render();
+
+    // Get PDF content
+    $pdfOutput = $dompdf->output();
+
+    // Return PDF response
+    return new Response($pdfOutput, Response::HTTP_OK, [
+        'Content-Type' => 'application/pdf',
+        'pdfContent' => base64_encode($pdfOutput),
+    ]);
+}
     
         #[Route('/showdocuser', name: 'showdocuser')] //affichage
         public function showdocuser(MedecinRepository $userRepository): Response
@@ -512,12 +558,111 @@ class UserController extends AbstractController
     $specialtyLabels = array_keys($specialtyCounts);
     $specialtyValues = array_values($specialtyCounts);
 
+
     // Render the chart template with data
     return $this->render('user/docchart.html.twig', [
         'specialtyLabels' => json_encode($specialtyLabels),
         'specialtyValues' => json_encode($specialtyValues),
     ]);
         }
+
+
+
+        #[Route('/chatbotadmin', name: 'chatbotadmin', methods: ['GET', 'POST'])]
+        public function chat(Request $request, SessionInterface $session): Response
+        {
+            // Initialize variables to hold the question and response
+            $question = '';
+            $response = '';
+        
+            // Check if the form is submitted
+            if ($request->isMethod('POST')) {
+                // Retrieve the question from the form data
+                $question = $request->request->get('text');
+        
+                // Check if the question is empty or null
+                if (!empty($question)) {
+                    // Your chatbot logic to generate a response based on the question
+                    $myApiKey = $_ENV['OPENAI_KEY'];
+                    $client = OpenAI::client($myApiKey);
+                    $result = $client->completions()->create([
+                        'model' => 'gpt-3.5-turbo-instruct',
+                        'prompt' => $question,
+                        'max_tokens' => 2048
+                    ]);
+                    $response = $result->choices[0]->text;
+        
+                    // Retrieve the chat history from the session for the current user
+                    $chatHistory = $session->get('chat_history_' . $session->getId(), []);
+        
+                    // Append the user's question and bot's response to the chat history
+                    $chatHistory[] = ['role' => 'user', 'message' => $question];
+                    $chatHistory[] = ['role' => 'bot', 'message' => $response];
+        
+                    // Store the updated chat history back into the session
+                    $session->set('chat_history_' . $session->getId(), $chatHistory);
+                }
+            }
+        
+            // Retrieve the conversation history from the session for the current user
+            $chatHistory = $session->get('chat_history_' . $session->getId(), []);
+        
+            // Render the chatbot template with the question, response, and conversation history
+            return $this->render('user/chatbotadmin.html.twig', [
+                'question' => $question,
+                'response' => $response,
+                'chat_history' => $chatHistory
+            ]);
+        }
+        
+
+
+#[Route('/chatbotuser', name: 'chatbotuser', methods: ['GET', 'POST'])]
+public function chatuser(Request $request, SessionInterface $session): Response
+{
+   // Initialize variables to hold the question and response
+   $question = '';
+   $response = '';
+
+   // Check if the form is submitted
+   if ($request->isMethod('POST')) {
+       // Retrieve the question from the form data
+       $question = $request->request->get('text');
+
+       // Check if the question is empty or null
+       if (!empty($question)) {
+           // Your chatbot logic to generate a response based on the question
+           $myApiKey = $_ENV['OPENAI_KEY'];
+           $client = OpenAI::client($myApiKey);
+           $result = $client->completions()->create([
+               'model' => 'gpt-3.5-turbo-instruct',
+               'prompt' => $question,
+               'max_tokens' => 2048
+           ]);
+           $response = $result->choices[0]->text;
+
+           // Retrieve the chat history from the session for the current user
+           $chatHistory = $session->get('chat_history_' . $session->getId(), []);
+
+           // Append the user's question and bot's response to the chat history
+           $chatHistory[] = ['role' => 'user', 'message' => $question];
+           $chatHistory[] = ['role' => 'bot', 'message' => $response];
+
+           // Store the updated chat history back into the session
+           $session->set('chat_history_' . $session->getId(), $chatHistory);
+       }
+   }
+
+   // Retrieve the conversation history from the session for the current user
+   $chatHistory = $session->get('chat_history_' . $session->getId(), []);
+
+   // Render the chatbot template with the question, response, and conversation history
+   return $this->render('user/chatbotuser.html.twig', [
+       'question' => $question,
+       'response' => $response,
+       'chat_history' => $chatHistory
+   ]);
+}
 
 
 }

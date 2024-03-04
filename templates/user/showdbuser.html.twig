@@ -22,7 +22,6 @@
             <div class="card-body">
             
               <h5 class="card-title">Datatables</h5>
-            
               <!-- Table with stripped rows -->
               <table class="table datatable">
                 
@@ -92,9 +91,27 @@ No Photo
         </div>
       </div>
     </section>
+    <section class="section" id="pdfSection" style="display: none;">
+      <h2>Liste des Profils</h2>
+      <iframe id="pdfFrame" src="{{ path('pdfadmin') }}" width="100%" height="600px"></iframe>
+  </section>
+    <button id="toggleButton" onclick="toggleView()" class="btn btn-secondary"><i class="fa-solid fa-file-pdf fa-xl"></i></button>
 
   </main><!-- End #main -->
  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+ <script>
+  function toggleView() {
+      var pdfSection = document.getElementById('pdfSection');
+      var dataTablesSection = document.querySelector('.section');
 
+      if (pdfSection.style.display === 'none') {
+          pdfSection.style.display = 'block';
+          dataTablesSection.style.display = 'none';
+      } else {
+          pdfSection.style.display = 'none';
+          dataTablesSection.style.display = 'block';
+      }
+  }
+</script>
  
   {% endblock %}

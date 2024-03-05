@@ -150,11 +150,11 @@ class RendezvousController extends AbstractController
   {
       
 
-    /*
+    
       
    // Replace these with your Twilio credentials
    $accountSid = 'AC19405307081f214bf11a9ffe75ed0720';
-   $authToken  = '7686e2fcc6b2df57b44c2cf8db0da723';
+   $authToken  = '09eecb4800240c4dc43c023d1308a902';
 
    // Create a Twilio client
    $twilio = new TwilioClient($accountSid, $authToken);
@@ -170,25 +170,24 @@ class RendezvousController extends AbstractController
            "from" => $from
        ]);
 
-   // You can handle the response as needed
-   // For example, you can check if the message was successfully sent
+   
    if ($message->sid) {
-       //return new Response('SMS sent successfully!');
+       
        $x=$managerRegistry->getManager();
       $rv=$rendezvous->find($id);
       $rv->setEtat(1);
       $x->persist($rv);
       $x->flush();
 
-      *////fincommentaire1
+      
       return $this->redirectToRoute('show');
-      /*commentaire2
+      
    } else {
        return new Response('Failed to send SMS.');
        return $this->redirectToRoute('show');
 
    }
-   */
+   
   }
 
   

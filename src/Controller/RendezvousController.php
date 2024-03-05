@@ -11,6 +11,7 @@ use Symfony\Component\Notifier\Texter\ProviderOptions;
 use Twilio\Rest\Client as TwilioClient;
 use App\Repository\MedecinRepository;
 use App\Repository\RendezvousRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -245,5 +246,37 @@ class RendezvousController extends AbstractController
             'results' => $results,
         ]);
     }
+
+    #[Route('/rendezvouschart', name: 'rendezvouschart')]
+public function rendezvouschart(MedecinRepository $doctorRepository, EntityManagerInterface $entityManager): Response
+{
+    // Get all doctors
+    $doctors = $doctorRepository->findAll();
+
+    // Prepare an array to store doctor names and appointment counts
+    $doctorAppointments = [];
+
+    // Loop through each doctor
+    foreach ($doctors as $doctor) {
+        $doctorName = $doctor->getFullname();
+
+        // Get all appointments for the current doctor
+        $appointments = $entityManager->getRepository(Rendezvous::class)->findBy(['medecin' => $doctor]);
+
+        // Count the number of appointments
+        $appointmentsCount = count($appointments);
+
+        // Store the data for each doctor
+        $doctorAppointments[] = [
+            'doctorName' => $doctorName,
+            'appointmentsCount' => $appointmentsCount,
+        ];
+    }
+
+    // Render the template with data
+    return $this->render('admin/rendezvouschart.html.twig', [
+        'doctorAppointments' => $doctorAppointments,
+    ]);
+}
 }
   

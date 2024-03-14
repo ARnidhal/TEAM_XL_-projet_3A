@@ -112,33 +112,35 @@
 
 
     document.addEventListener('DOMContentLoaded', function() {
-    const lastBotMessage = document.querySelector('.bot-message:last-child'); // Select the last bot message
+     const lastBotMessage = document.querySelector('.bot-message:last-child'); // Select the last bot message
+ 
+     if (lastBotMessage) {
+         const text = lastBotMessage.textContent;
+         lastBotMessage.textContent = ''; // Clear the content of the last bot message
+         typeWriter(text, lastBotMessage, 0); // Call the typewriter function for the last bot message
+     }
+ });
+ 
+ function typeWriter(text, element, i) {
+     if (i < text.length) {
+         element.textContent += text.charAt(i); // Append the next character to the message
+         i++;
+         setTimeout(function() { 
+             typeWriter(text, element, i); 
+             // Scroll to the bottom of the chat container
+             const chatContainer = document.querySelector('.chat');
+             chatContainer.scrollTop = chatContainer.scrollHeight;
+         }, getRandomInt(20, 30)); // Randomize typing speed
+     }
+ }
+ 
+ function getRandomInt(min, max) {
+     return Math.floor(Math.random() * (max - min + 1)) + min;
+ }
+ 
+ 
+ </script>
 
-    if (lastBotMessage) {
-        const text = lastBotMessage.textContent;
-        lastBotMessage.textContent = ''; // Clear the content of the last bot message
-        typeWriter(text, lastBotMessage, 0); // Call the typewriter function for the last bot message
-    }
-});
-
-function typeWriter(text, element, i) {
-    if (i < text.length) {
-        element.textContent += text.charAt(i); // Append the next character to the message
-        i++;
-        setTimeout(function() { 
-            typeWriter(text, element, i); 
-            // Scroll to the bottom of the chat container
-            const chatContainer = document.querySelector('.chat');
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }, getRandomInt(20, 30)); // Randomize typing speed
-    }
-}
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-</script>
 
 
 {% endblock %}

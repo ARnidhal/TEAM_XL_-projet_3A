@@ -53,6 +53,9 @@ class Post
     #[ORM\OneToMany(mappedBy: 'id_post', targetEntity: Comment::class, cascade: ['remove'])]
     private Collection $id_comment;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $phonenumber = null;
+
     public function __construct()
     {   
         $this->id_comment = new ArrayCollection();
@@ -200,6 +203,18 @@ class Post
                 $idComment->setIdPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhonenumber(): ?int
+    {
+        return $this->phonenumber;
+    }
+
+    public function setPhonenumber(?int $phonenumber): static
+    {
+        $this->phonenumber = $phonenumber;
 
         return $this;
     }

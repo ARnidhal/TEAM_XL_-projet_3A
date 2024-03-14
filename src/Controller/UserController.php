@@ -381,6 +381,8 @@ class UserController extends AbstractController
             $form->handleRequest($req);
     
             if ($form->isSubmitted() and $form->isValid()) {
+                $user->setSpecialite(0);
+        $user->setAdress(0);
                  $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
                   $photoFile = $form->get('photo')->getData();
     

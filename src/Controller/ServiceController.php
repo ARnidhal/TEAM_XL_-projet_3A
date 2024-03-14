@@ -128,7 +128,7 @@ class ServiceController extends AbstractController
         // Rendre la seconde page
         return $this->render('service/frontaffichageservice.html.twig' , [
             'cat' => $cat,
-            'service1'=>$service1
+            'service1'=>$service
         ]);
     }
 

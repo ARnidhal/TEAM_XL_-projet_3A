@@ -154,7 +154,7 @@ class RendezvousController extends AbstractController
       
    // Replace these with your Twilio credentials
    $accountSid = 'AC19405307081f214bf11a9ffe75ed0720';
-   $authToken  = '09eecb4800240c4dc43c023d1308a902';
+   $authToken  = '4a2d912ccda58fdcd6c1c6d76b90c416';
 
    // Create a Twilio client
    $twilio = new TwilioClient($accountSid, $authToken);

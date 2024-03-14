@@ -43,7 +43,7 @@ class CategoryController extends AbstractController
         {
         
 // Ajouter un message flash de succès
-$flashBag->add('success', 'La réservation a été ajoutée avec succès.');
+$flashBag->add('success', 'La CATEGORY a été ajoutée avec succès.');
          $x->persist($cat);
        
         $x->flush();

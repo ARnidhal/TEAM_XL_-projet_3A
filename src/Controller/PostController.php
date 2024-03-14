@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Twilio\Rest\Client as TwilioClient;
 
 class PostController extends AbstractController
 {
@@ -294,7 +295,7 @@ class PostController extends AbstractController
         $dataid = $postRepository->find($id);
         $em->remove($dataid);
         $em->flush();
-        return $this->redirectToRoute('app_post');
+        return $this->redirectToRoute('app_admin');
     }
     // #[Route('/validpost/{id}', name: 'validpost')]
     // public function validpost($id, PostRepository $postRepository): Response
@@ -307,7 +308,7 @@ class PostController extends AbstractController
     // }
     
     #[Route('/validpost/{id}', name: 'validpost')]
-    public function validpost($id, PostRepository $postRepository): Response
+    public function validpost($id, PostRepository $postRepository,ManagerRegistry $managerRegistry): Response
     {
         // Find the post entity by ID
         $post = $postRepository->find($id);
@@ -316,15 +317,47 @@ class PostController extends AbstractController
             // Post not found, handle this case accordingly
             throw $this->createNotFoundException('Post not found');
         }
+        // Replace these with your Twilio credentials
+   $accountSid = 'AC19405307081f214bf11a9ffe75ed0720';
+   $authToken  = '4a2d912ccda58fdcd6c1c6d76b90c416';
+
+   // Create a Twilio client
+   $twilio = new TwilioClient($accountSid, $authToken);
+
+   // Replace these with the phone number you want to send the SMS to and your Twilio phone number
+   $to = '+21629304408'; // recipient's phone number
+   $from = '+13342343809'; // your Twilio phone number
+
+   // Message content
+   $message = $twilio->messages
+       ->create($to, [
+           "body" => "Hello your post have been approuved!",
+           "from" => $from
+       ]);
+
+   
+   if ($message->sid) {
+       
+       $x=$managerRegistry->getManager();
+      $rv=$postRepository->find($id);
+      $rv->setValidationPost(1);;
+      $x->persist($rv);
+      $x->flush();
+
+      
+      return $this->redirectToRoute('app_post');
+      
+   } else {
+       return new Response('Failed to send SMS.');
+       return $this->redirectToRoute('postsingle', ['id' => $id]);
+
+   }
+   
 
         // Set validation status to 1
-        $post->setValidationPost(1);
+        
 
-        // Persist changes to the database using the injected EntityManager
-        $this->entityManager->flush();
-
-        // Redirect to the route named 'app_post'
-        return $this->redirectToRoute('postsingle', ['id' => $id]);
+       
     }
 
     #[Route('/addlikepost/{id}', name: 'addlikepost')]

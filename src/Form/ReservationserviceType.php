@@ -21,12 +21,8 @@ class ReservationserviceType extends AbstractType
             ->add('idserivce' , EntityType::class,['class' =>Service::class,
             'choice_label' =>'nom',
             'label'=>'nom',
-        ])
-        ->add('captcha', Recaptcha3Type::class, [
-            'constraints' => new Recaptcha3(),
-            'action_name' => 'homepage',
-           
-        ]);
+    ]);
+       
 
     }
 

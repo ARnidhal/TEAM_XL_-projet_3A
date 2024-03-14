@@ -3,6 +3,7 @@
 {% block title %}Edit Participant{% endblock %}
 
 {% block body %}
+<div style="margin: 400px;"> 
     <h1>Edit Participant</h1>
 
     {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
@@ -11,4 +12,5 @@
     <a href="{{ path('app_participant_index') }}">back to list</a>
 
     {{ include('participant/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

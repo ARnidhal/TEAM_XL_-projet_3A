@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Twilio\TwiML\Voice\Number;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class PostType extends AbstractType
 {
@@ -18,6 +21,14 @@ class PostType extends AbstractType
     {
         $builder
             ->add('id_post',TextType::class,['data'=>mt_rand(10000,999999),])
+            ->add('phonenumber', IntegerType::class, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^\d+$/',
+                        'message' => 'Please enter a valid phone number.',
+                    ]),
+                ],
+            ])
             ->add('type_post', ChoiceType::class, [
                 'label' => 'Choose Type',
                 'choices' => [

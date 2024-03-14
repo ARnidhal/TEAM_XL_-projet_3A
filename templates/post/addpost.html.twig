@@ -39,6 +39,12 @@
             </div>
         </div>
         <div class="col-lg-6">
+          <div class="form-group">
+              {{ form_widget(f.phonenumber, {'attr': {'class': 'form-control', 'placeholder': 'Phone Number'}}) }}
+              {{ form_errors(f.phonenumber, {'attr': {'class': 'form-danger'}}) }}
+          </div>
+      </div>
+        <div class="col-lg-6">
             <div class="form-group">
                 {{form_widget(f.type_post,{'attr':{'type':'select','class':'form-control'}})}}              
             </div>
